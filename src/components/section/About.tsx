@@ -4,13 +4,13 @@ import { FaGithub } from 'react-icons/fa';
 import { SiVelog } from 'react-icons/si';
 
 const Section = styled.section`
-    min-height: 100vh;
-    margin: 0 auto;
+    margin: 60px auto 0;
     width: 80%;
+    height: calc(100vh - 60px);
 `;
 
 const NameBox = styled.div`
-    margin: 100px 0 120px;
+    padding: 80px 0 120px;
     width: 100%;
     font-family: ${(props) => props.theme.titleFont};
     font-weight: 600;
