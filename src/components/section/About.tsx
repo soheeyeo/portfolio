@@ -1,7 +1,10 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { LuMail } from 'react-icons/lu';
 import { FaGithub } from 'react-icons/fa';
 import { SiVelog } from 'react-icons/si';
+import { getAbout } from '../../api';
+import { AxiosResponse } from 'axios';
 
 const Section = styled.section`
     margin: 60px auto 0;
@@ -85,46 +88,62 @@ const BlogIcon = styled(SiVelog)`
 `;
 
 const About = () => {
+    const [data, setData] = useState<Iabout[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = (): void => {
+        getAbout()
+            .then((res: AxiosResponse<ApiAboutType> | undefined) => {
+                if (res) {
+                    setData(res.data.about);
+                    setIsLoading(true);
+                }
+            })
+            .catch((err: Error) => console.log(err));
+    };
+
     return (
         <Section>
             <h1 className="a11yhidden">ABOUT</h1>
             <NameBox>
                 <Name>SOHEE YEO</Name>
             </NameBox>
-            <ContentsContainer>
-                <IntroBtn>
-                    <IntroTxt>Intro</IntroTxt>
-                </IntroBtn>
-                <IntroContainer>
-                    <Intro>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Id exercitationem repudiandae rerum deleniti
-                        consequuntur animi distinctio aut, non sunt et obcaecati
-                        harum eum fuga, dolor fugit eligendi numquam! Laborum,
-                        quis.
-                    </Intro>
-                    <IconContainer>
-                        <p>
-                            <EmailIcon />
-                            sohee@gmail.com
-                        </p>
-                        <Link
-                            href="https://github.com/soheeyeo"
-                            target="_blank"
-                        >
-                            <GitHubIcon />
-                            GitHub
-                        </Link>
-                        <Link
-                            href="https://velog.io/@florence_y/posts"
-                            target="_blank"
-                        >
-                            <BlogIcon />
-                            Blog
-                        </Link>
-                    </IconContainer>
-                </IntroContainer>
-            </ContentsContainer>
+            {isLoading ? (
+                <ContentsContainer>
+                    <IntroBtn>
+                        <IntroTxt>Intro</IntroTxt>
+                    </IntroBtn>
+                    <IntroContainer>
+                        <Intro>{data[0].info}</Intro>
+                        <IconContainer>
+                            <p>
+                                <EmailIcon />
+                                {data[0].email}
+                            </p>
+                            <Link
+                                href="https://github.com/soheeyeo"
+                                target="_blank"
+                            >
+                                <GitHubIcon />
+                                GitHub
+                            </Link>
+                            <Link
+                                href="https://velog.io/@florence_y/posts"
+                                target="_blank"
+                            >
+                                <BlogIcon />
+                                Blog
+                            </Link>
+                        </IconContainer>
+                    </IntroContainer>
+                </ContentsContainer>
+            ) : (
+                ''
+            )}
         </Section>
     );
 };
