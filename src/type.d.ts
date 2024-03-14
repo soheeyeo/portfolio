@@ -23,6 +23,10 @@ interface Iskills {
     content: string[];
 }
 
+type projectProps = {
+    data: Iprojects[];
+};
+
 type ApiAboutType = {
     message: string;
     status: string;

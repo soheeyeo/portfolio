@@ -32,6 +32,12 @@ const ProjType = styled.p`
     font-size: 16px;
 `;
 
+const ProjTechContainer = styled.ul`
+    display: flex;
+`;
+
+const ProjTechLi = styled.li``;
+
 const ProjTech = styled.span`
     margin-right: 20px;
     font-weight: 600;
@@ -47,22 +53,33 @@ const Img = styled.img`
     border-radius: 10px;
 `;
 
-const Project1 = () => {
+const Project1 = ({ data }: projectProps) => {
+    const proj = data[0];
+
+    const stack: string[] = proj.stack.reduce((prev: string[], cur: object) => {
+        const value = Object.values(cur)[0];
+        prev.push(...value);
+        return prev;
+    }, []);
+
+    console.log(stack);
+
     return (
         <Card>
             <ContentContainer>
-                <ProjName></ProjName>
+                <ProjName>{proj.name}</ProjName>
                 <ProjDesc>
-                    <ProjContent></ProjContent>
-                    <ProjType></ProjType>
-                    <ProjTech></ProjTech>
-                    <ProjTech></ProjTech>
-                    <ProjTech></ProjTech>
-                    <ProjTech></ProjTech>
-                    <ProjTech></ProjTech>
-                    <ProjTech></ProjTech>
-                    <ProjTech></ProjTech>
-                    <ProjTech></ProjTech>
+                    <ProjContent>{proj.intro}</ProjContent>
+                    <ProjType>{proj.type}</ProjType>
+                    <ProjTechContainer>
+                        {stack.map((a, i) => {
+                            return (
+                                <ProjTechLi key={i}>
+                                    <ProjTech>{a}</ProjTech>
+                                </ProjTechLi>
+                            );
+                        })}
+                    </ProjTechContainer>
                 </ProjDesc>
             </ContentContainer>
             <ImgWrapper>

@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Project1 from './Projects/Project1';
+import { getProjects } from '../../api';
+import { AxiosResponse } from 'axios';
 
 const Section = styled.section`
     margin: 60px auto 0;
@@ -16,10 +19,28 @@ const Title = styled.h1`
 `;
 
 const Projects = () => {
+    const [data, setData] = useState<Iprojects[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = (): void => {
+        getProjects()
+            .then((res: AxiosResponse<ApiProjectsType> | undefined) => {
+                if (res) {
+                    setData(res.data.projects);
+                    setIsLoading(true);
+                }
+            })
+            .catch((err: Error) => console.log(err));
+    };
+
     return (
         <Section>
             <Title>PROJECTS</Title>
-            <Project1 />
+            {isLoading ? <Project1 data={data} /> : ''}
         </Section>
     );
 };
