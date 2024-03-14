@@ -12,4 +12,4 @@ const aboutSchema: Schema = new Schema({
     },
 });
 
-export default model<Iabout>('About', aboutSchema);
+export default model<Iabout>('About', aboutSchema, 'about');

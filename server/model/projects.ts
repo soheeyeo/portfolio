@@ -15,7 +15,7 @@ const projectsSchema: Schema = new Schema({
         required: true,
     },
     stack: {
-        type: [String],
+        type: [Object],
         required: true,
     },
     info: {
