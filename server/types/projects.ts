@@ -2,9 +2,9 @@ export interface Iprojects {
     name: string;
     intro: string;
     type: string;
-    stack: [object];
+    stack: object;
     info: string;
-    link: [object];
+    link: object;
     goals: [string];
     plan: string;
     features: [string];

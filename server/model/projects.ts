@@ -15,7 +15,7 @@ const projectsSchema: Schema = new Schema({
         required: true,
     },
     stack: {
-        type: [Object],
+        type: Object,
         required: true,
     },
     info: {
@@ -23,7 +23,7 @@ const projectsSchema: Schema = new Schema({
         required: true,
     },
     link: {
-        type: [Object],
+        type: Object,
         required: true,
     },
     goals: {
