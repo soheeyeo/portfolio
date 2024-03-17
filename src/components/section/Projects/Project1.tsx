@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import cover from '../../../assets/cover_cho.jpg';
+import cover from '../../../assets/cover/cover_cho.jpg';
+import Modal from '../../modal/Modal';
 
 const Card = styled.div`
     display: flex;
@@ -56,36 +57,33 @@ const Img = styled.img`
 const Project1 = ({ data }: projectProps) => {
     const proj = data[0];
 
-    const stack: string[] = proj.stack.reduce((prev: string[], cur: object) => {
-        const value = Object.values(cur)[0];
-        prev.push(...value);
-        return prev;
-    }, []);
-
-    console.log(stack);
+    const stack = Object.values(data[0].stack).flat();
 
     return (
-        <Card>
-            <ContentContainer>
-                <ProjName>{proj.name}</ProjName>
-                <ProjDesc>
-                    <ProjContent>{proj.intro}</ProjContent>
-                    <ProjType>{proj.type}</ProjType>
-                    <ProjTechContainer>
-                        {stack.map((a, i) => {
-                            return (
-                                <ProjTechLi key={i}>
-                                    <ProjTech>{a}</ProjTech>
-                                </ProjTechLi>
-                            );
-                        })}
-                    </ProjTechContainer>
-                </ProjDesc>
-            </ContentContainer>
-            <ImgWrapper>
-                <Img src={cover} />
-            </ImgWrapper>
-        </Card>
+        <>
+            <Card>
+                <ContentContainer>
+                    <ProjName>{proj.name}</ProjName>
+                    <ProjDesc>
+                        <ProjContent>{proj.intro}</ProjContent>
+                        <ProjType>{proj.type}</ProjType>
+                        <ProjTechContainer>
+                            {stack.map((a, i) => {
+                                return (
+                                    <ProjTechLi key={i}>
+                                        <ProjTech>{a}</ProjTech>
+                                    </ProjTechLi>
+                                );
+                            })}
+                        </ProjTechContainer>
+                    </ProjDesc>
+                </ContentContainer>
+                <ImgWrapper>
+                    <Img src={cover} />
+                </ImgWrapper>
+            </Card>
+            <Modal proj={proj} />
+        </>
     );
 };
 

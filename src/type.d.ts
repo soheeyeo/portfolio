@@ -7,9 +7,9 @@ interface Iprojects {
     name: string;
     intro: string;
     type: string;
-    stack: object[];
+    stack: object;
     info: string;
-    link: object[];
+    link: Ilink;
     goals: string[];
     plan: string;
     features: string[];
@@ -23,8 +23,20 @@ interface Iskills {
     content: string[];
 }
 
+interface Ilink {
+    url: string;
+    github: string;
+    accountId: string;
+    accountId2: string;
+    accountPw: string;
+}
+
 type projectProps = {
     data: Iprojects[];
+};
+
+type projProps = {
+    proj: Iprojects;
 };
 
 type ApiAboutType = {
