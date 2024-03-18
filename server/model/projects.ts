@@ -42,7 +42,7 @@ const projectsSchema: Schema = new Schema({
         type: [String],
     },
     lesson: {
-        type: [Object],
+        type: Object,
         required: true,
     },
 });

@@ -9,5 +9,5 @@ export interface Iprojects {
     plan: string;
     features: [string];
     role: [string];
-    lesson: [object];
+    lesson: object;
 }
