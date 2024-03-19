@@ -1,26 +1,43 @@
 import styled from 'styled-components';
 import { FaGithub } from 'react-icons/fa';
 import { FaLink } from 'react-icons/fa6';
+import { BsCheck } from 'react-icons/bs';
+import { PiDotBold } from 'react-icons/pi';
+import { HiMiniXMark } from 'react-icons/hi2';
 
 const ModalBg = styled.div`
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
 `;
 
 const ModalContainer = styled.div`
-    position: relative;
-    width: 80%;
-    margin: 15% auto;
+    position: absolute;
     padding: 60px;
+    width: 80%;
+    height: 80vh;
     background-color: #e5daf8;
     border-radius: 5px;
+    overflow: hidden;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.4);
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(123, 90, 201, 0.3);
+        border-radius: 6px;
+    }
 `;
 
 const ModalContent = styled.div`
@@ -30,80 +47,169 @@ const ModalContent = styled.div`
 
 const ImgContainer = styled.div`
     display: flex;
+    position: sticky;
     gap: 30px;
+    height: 100%;
+    top: 25%;
 `;
 
 const ImgWrapperB = styled.div`
     width: 400px;
     height: 250px;
-    border: 1px solid purple;
+    background-color: #d4cae5;
     border-radius: 5px;
 `;
 
 const ImgWrapperS = styled.div`
     width: 120px;
     height: 250px;
-    border: 1px solid purple;
+    background-color: #d4cae5;
     border-radius: 5px;
 `;
 
 const ContentContainer = styled.div`
     font-family: ${(props) => props.theme.contentFont};
+    font-size: 15px;
     color: #000;
 `;
 
 const ProjName = styled.h3`
-    margin-bottom: 30px;
+    display: inline;
     font-size: 24px;
-    font-weight: 500;
+    font-weight: 600;
+`;
+
+const ProjType = styled.span`
+    display: inline;
+    margin-left: 10px;
+    font-size: 14px;
 `;
 
 const ProjInfo = styled.p`
-    margin-bottom: 30px;
-    font-size: 16px;
-    line-height: 1.5;
+    margin: 30px 0 20px;
+    font-size: 15px;
+    line-height: 1.8;
     word-break: keep-all;
     white-space: pre-wrap;
 `;
 
 const LinkTxt = styled.span`
-    font-size: 20px;
+    font-size: 19px;
+    font-weight: 600;
     font-family: ${(props) => props.theme.titleFont};
-    font-weight: 500;
 `;
 
 const LinkContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-top: 20px;
+    display: inline-block;
+    margin-left: 10px;
 `;
 
 const Link = styled.a`
-    font-size: 14px;
-    color: #7c5ac9;
+    margin-right: 8px;
+    font-size: 18px;
+    color: #000;
 `;
 
 const LinkIcon = styled(FaLink)`
-    margin-right: 5px;
     vertical-align: top;
 `;
 
 const GitHubIcon = styled(FaGithub)`
-    margin-right: 5px;
     vertical-align: top;
 `;
 
-const AccountTxt = styled.span`
-    font-size: 14px;
+const AccountContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 8px;
+    padding: 10px;
+    margin: 10px 0 20px 0;
+    width: 40%;
+    font-size: 13px;
+    background-color: rgba(123, 90, 201, 0.2);
+    border-radius: 5px;
 `;
 
-const AccountContainer = styled.div``;
+const AccountTxt = styled.span`
+    margin-bottom: 7px;
+    grid-column: 1 / 3;
+`;
+
+const AccountInfo = styled.span`
+    font-weight: 600;
+`;
+
+const ContentBox = styled.div`
+    margin-bottom: 20px;
+`;
+
+const ContentTitle = styled.p`
+    margin-bottom: 20px;
+    font-size: 17px;
+    font-weight: 600;
+`;
+
+const CheckIcon = styled(BsCheck)`
+    margin-right: 5px;
+    vertical-align: top;
+    width: 16px;
+`;
+
+const LiItem = styled.li`
+    margin-bottom: 10px;
+    line-height: 1.2;
+`;
+
+const StackContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+`;
+
+const StackType = styled.span`
+    padding-bottom: 10px;
+`;
+
+const StackLi = styled.div`
+    font-weight: 600;
+    color: #7c5ac9;
+`;
+
+const Stack = styled.span`
+    margin-right: 15px;
+`;
+
+const LiIcon = styled(PiDotBold)`
+    margin-right: 5px;
+`;
+
+const LessonTit = styled.p`
+    margin-bottom: 10px;
+    font-weight: 600;
+`;
+
+const Lesson = styled.p`
+    margin-bottom: 20px;
+    line-height: 1.5;
+    word-break: keep-all;
+    white-space: pre-wrap;
+`;
+
+const CloseIcon = styled(HiMiniXMark)`
+    position: fixed;
+    top: 96px;
+    right: 190px;
+    font-size: 24px;
+    color: #000;
+`;
 
 const Modal = ({ proj }: projProps) => {
+    const stack = Object.values(proj.stack);
+    const lesson = Object.entries(proj.lesson);
+
     return (
         <ModalBg>
             <ModalContainer>
+                <CloseIcon />
                 <ModalContent>
                     <ImgContainer>
                         <ImgWrapperB></ImgWrapperB>
@@ -111,20 +217,101 @@ const Modal = ({ proj }: projProps) => {
                     </ImgContainer>
                     <ContentContainer>
                         <ProjName>{proj.name}</ProjName>
+                        <ProjType>{proj.type}</ProjType>
                         <ProjInfo>{proj.info}</ProjInfo>
                         <LinkTxt>Link</LinkTxt>
                         <LinkContainer>
                             <Link href={proj.link.url} target="_blank">
                                 <LinkIcon />
-                                배포 사이트 바로가기
                             </Link>
                             <Link href={proj.link.github} target="_blank">
                                 <GitHubIcon />
-                                깃헙 바로가기
                             </Link>
                         </LinkContainer>
-                        <AccountTxt>테스트 계정</AccountTxt>
-                        <AccountContainer></AccountContainer>
+                        <AccountContainer>
+                            <AccountTxt>테스트 계정</AccountTxt>
+                            <span>아이디</span>
+                            <AccountInfo>{proj.link.accountId}</AccountInfo>
+                            <span>패스워드</span>
+                            <AccountInfo>{proj.link.accountPw}</AccountInfo>
+                        </AccountContainer>
+                        <ContentBox>
+                            <ContentTitle>📌 프로젝트 목표</ContentTitle>
+                            <ul>
+                                {proj.goals.map((a, i) => {
+                                    return (
+                                        <LiItem key={i}>
+                                            <CheckIcon />
+                                            {a}
+                                        </LiItem>
+                                    );
+                                })}
+                            </ul>
+                        </ContentBox>
+                        <ContentBox>
+                            <ContentTitle>🛠️ 사용 기술</ContentTitle>
+                            <StackContainer>
+                                <StackType>Front-End</StackType>
+                                <StackLi>
+                                    {stack[0].map((a: string, i: number) => {
+                                        return <Stack key={i}>{a}</Stack>;
+                                    })}
+                                </StackLi>
+                                <StackType>Back-End</StackType>
+                                <StackLi>
+                                    {stack[1].map((a: string, i: number) => {
+                                        return <Stack key={i}>{a}</Stack>;
+                                    })}
+                                </StackLi>
+                                <StackType>Etc</StackType>
+                                <StackLi>
+                                    {stack[2].map((a: string, i: number) => {
+                                        return <Stack key={i}>{a}</Stack>;
+                                    })}
+                                </StackLi>
+                            </StackContainer>
+                        </ContentBox>
+                        <ContentBox>
+                            <ContentTitle>🌏 프로젝트 소개</ContentTitle>
+                            <ul>
+                                {proj.features.map((a, i) => {
+                                    return (
+                                        <LiItem key={i}>
+                                            <LiIcon />
+                                            {a}
+                                        </LiItem>
+                                    );
+                                })}
+                            </ul>
+                        </ContentBox>
+                        <ContentBox>
+                            <ContentTitle>💻 담당 기능</ContentTitle>
+                            <ul>
+                                {proj.role.map((a, i) => {
+                                    return (
+                                        <LiItem key={i}>
+                                            <LiIcon />
+                                            {a}
+                                        </LiItem>
+                                    );
+                                })}
+                            </ul>
+                        </ContentBox>
+                        <ContentBox>
+                            <ContentTitle>💡 레슨런</ContentTitle>
+                            <div>
+                                {lesson.map((a, i) => {
+                                    return (
+                                        <>
+                                            <LessonTit key={i}>
+                                                {a[0]}
+                                            </LessonTit>
+                                            <Lesson key={i}>{a[1]}</Lesson>
+                                        </>
+                                    );
+                                })}
+                            </div>
+                        </ContentBox>
                     </ContentContainer>
                 </ModalContent>
             </ModalContainer>
