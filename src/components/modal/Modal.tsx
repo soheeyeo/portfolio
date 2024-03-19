@@ -200,16 +200,21 @@ const CloseIcon = styled(HiMiniXMark)`
     right: 190px;
     font-size: 24px;
     color: #000;
+    cursor: pointer;
 `;
 
-const Modal = ({ proj }: projProps) => {
+const Modal = ({ proj, setIsOpen }: IprojProps) => {
     const stack = Object.values(proj.stack);
     const lesson = Object.entries(proj.lesson);
+
+    const handleOnClick = () => {
+        setIsOpen(false);
+    };
 
     return (
         <ModalBg>
             <ModalContainer>
-                <CloseIcon />
+                <CloseIcon onClick={handleOnClick} />
                 <ModalContent>
                     <ImgContainer>
                         <ImgWrapperB></ImgWrapperB>

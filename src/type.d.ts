@@ -31,12 +31,13 @@ interface Ilink {
     accountPw: string;
 }
 
+interface IprojProps {
+    proj: Iprojects;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 type projectProps = {
     data: Iprojects[];
-};
-
-type projProps = {
-    proj: Iprojects;
 };
 
 type ApiAboutType = {

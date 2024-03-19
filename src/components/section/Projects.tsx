@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Project1 from './Projects/Project1';
 import { getProjects } from '../../api';
 import { AxiosResponse } from 'axios';
+import Project1 from './Projects/Project1';
+import Project2 from './Projects/Project2';
+import Project3 from './Projects/Project3';
 
 const Section = styled.section`
     margin: 60px auto 0;
     width: 80%;
-    height: calc(100vh - 60px);
+    height: 100%;
 `;
 
 const Title = styled.h1`
@@ -40,7 +42,15 @@ const Projects = () => {
     return (
         <Section>
             <Title>PROJECTS</Title>
-            {isLoading ? <Project1 data={data} /> : ''}
+            {isLoading ? (
+                <>
+                    <Project1 data={data} />
+                    <Project2 data={data} />
+                    <Project3 data={data} />
+                </>
+            ) : (
+                ''
+            )}
         </Section>
     );
 };

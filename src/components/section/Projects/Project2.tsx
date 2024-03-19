@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import cover from '../../../assets/cover/whale_d.jpg';
+import cover from '../../../assets/cover/co_1.jpg';
 import Modal from '../../modal/Modal';
 import { useState } from 'react';
 
@@ -56,10 +56,10 @@ const Img = styled.img`
     border-radius: 10px;
 `;
 
-const Project1 = ({ data }: projectProps) => {
-    const proj = data[0];
+const Project2 = ({ data }: projectProps) => {
+    const proj = data[1];
 
-    const stack = Object.values(data[0].stack).flat();
+    const stack = Object.values(data[1].stack).flat();
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -95,4 +95,4 @@ const Project1 = ({ data }: projectProps) => {
     );
 };
 
-export default Project1;
+export default Project2;
