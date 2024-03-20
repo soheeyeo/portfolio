@@ -1,12 +1,36 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import cover from '../../../assets/cover/co_1.jpg';
 import Modal from '../../modal/Modal';
 import { useState } from 'react';
+import useScrollAnimation from '../../../hooks/useScrollAnimation';
 
-const Card = styled.div`
+const animation = keyframes`
+    0%{
+        opacity: 0;
+        transform: translate3d(100px, 0, 0);
+    }
+
+    50%{
+        opacity: 0;
+        transform: translate3d(50px, 0, 0);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+`;
+
+const Card = styled.div<{ view: boolean }>`
     display: flex;
     justify-content: space-between;
     height: 80vh;
+    opacity: ${(props) => (props.view ? 1 : 0)};
+    animation: ${(props) =>
+        props.view &&
+        css`
+            ${animation} 1s
+        `};
 `;
 
 const ProjName = styled.h3`
@@ -56,10 +80,12 @@ const Img = styled.img`
     border-radius: 10px;
 `;
 
-const Project2 = ({ data }: projectProps) => {
+const Project2 = ({ data }: IprojectProps) => {
     const proj = data[1];
 
     const stack = Object.values(data[1].stack).flat();
+
+    const { ref, isInView } = useScrollAnimation();
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -69,7 +95,7 @@ const Project2 = ({ data }: projectProps) => {
 
     return (
         <>
-            <Card onClick={handleOnClick}>
+            <Card ref={ref} view={isInView} onClick={handleOnClick}>
                 <ContentContainer>
                     <ProjName>{proj.name}</ProjName>
                     <ProjDesc>

@@ -36,9 +36,9 @@ interface IprojProps {
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-type projectProps = {
+interface IprojectProps {
     data: Iprojects[];
-};
+}
 
 type ApiAboutType = {
     message: string;

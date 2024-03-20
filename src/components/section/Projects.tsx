@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { getProjects } from '../../api';
 import { AxiosResponse } from 'axios';
 import Project1 from './Projects/Project1';
 import Project2 from './Projects/Project2';
 import Project3 from './Projects/Project3';
+import useScrollAnimation from '../../hooks/useScrollAnimation';
 
 const Section = styled.section`
     margin: 60px auto 0;
@@ -12,17 +13,37 @@ const Section = styled.section`
     height: 100%;
 `;
 
-const Title = styled.h1`
+const animation = keyframes`
+    0%{
+        opacity: 0;
+        transform: translate3d(-30px, 0, 0);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+`;
+
+const Title = styled.h1<{ view: boolean }>`
     padding: 80px 0 120px;
     font-size: 64px;
     font-family: ${(props) => props.theme.titleFont};
     font-weight: 600;
     color: #c8b6ff;
+    opacity: ${(props) => (props.view ? 1 : 0)};
+    animation: ${(props) =>
+        props.view &&
+        css`
+            ${animation} 1s ease-in-out
+        `};
 `;
 
 const Projects = () => {
     const [data, setData] = useState<Iprojects[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+
+    const { ref, isInView } = useScrollAnimation();
 
     useEffect(() => {
         fetchData();
@@ -41,12 +62,14 @@ const Projects = () => {
 
     return (
         <Section>
-            <Title>PROJECTS</Title>
+            <Title ref={ref} view={isInView}>
+                PROJECTS
+            </Title>
             {isLoading ? (
                 <>
-                    <Project1 data={data} />
-                    <Project2 data={data} />
                     <Project3 data={data} />
+                    <Project2 data={data} />
+                    <Project1 data={data} />
                 </>
             ) : (
                 ''
