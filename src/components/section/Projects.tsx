@@ -26,7 +26,7 @@ const animation = keyframes`
 `;
 
 const Title = styled.h1<{ view: boolean }>`
-    padding: 80px 0 120px;
+    padding: 80px 0;
     font-size: 64px;
     font-family: ${(props) => props.theme.titleFont};
     font-weight: 600;

@@ -43,7 +43,7 @@ export const GlobalStyle = createGlobalStyle`
 
     body {
         line-height: 1;
-        background-color: #1a1c20;
+        background-color: ${(props) => props.theme.bgColor};
         color: #fff;
     }
 

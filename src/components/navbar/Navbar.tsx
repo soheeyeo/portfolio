@@ -8,7 +8,7 @@ const Nav = styled.nav`
     justify-content: right;
     width: 80%;
     gap: 36px;
-    background-color: #1a1c20;
+    background-color: ${(props) => props.theme.bgColor};
     top: 0;
     left: 0;
     right: 0;

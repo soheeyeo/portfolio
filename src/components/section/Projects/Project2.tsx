@@ -22,15 +22,58 @@ const animation = keyframes`
 `;
 
 const Card = styled.div<{ view: boolean }>`
+    position: relative;
     display: flex;
     justify-content: space-between;
-    height: 80vh;
+    align-items: center;
+    padding: 0 40px;
+    margin-bottom: 200px;
+    height: 70vh;
+    cursor: pointer;
+    transition: all 0.75s ease 0s;
     opacity: ${(props) => (props.view ? 1 : 0)};
     animation: ${(props) =>
         props.view &&
         css`
             ${animation} 1s
         `};
+
+    &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 0%;
+        right: 0px;
+        width: 100%;
+        height: 100%;
+        background: rgba(62, 50, 79, 0.2);
+        border-radius: 30px;
+        -webkit-transform-origin: right top;
+        -ms-transform-origin: right top;
+        transform-origin: right top;
+        -webkit-transform: scale(0, 1);
+        -ms-transform: scale(0, 1);
+        transform: scale(0, 1);
+        -webkit-transition: transform 0.75s cubic-bezier(1, 0, 0, 1);
+        transition: transform 0.75s cubic-bezier(1, 0, 0, 1);
+        z-index: -1;
+    }
+
+    &:hover::before {
+        -webkit-transform-origin: right top;
+        -ms-transform-origin: right top;
+        transform-origin: right top;
+        -webkit-transform: scale(1, 1);
+        -ms-transform: scale(1, 1);
+        transform: scale(1, 1);
+        transition-delay: 0.4s;
+    }
+
+    &:hover {
+        transform: translate3d(0, -3px, 0);
+        transition: all 0.75s ease 0s;
+        transition-delay: 0.4s;
+    }
 `;
 
 const ProjName = styled.h3`
