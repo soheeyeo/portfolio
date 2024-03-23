@@ -1,24 +1,51 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { FaGithub } from 'react-icons/fa';
 import { FaLink } from 'react-icons/fa6';
 import { BsCheck } from 'react-icons/bs';
 import { PiDotBold } from 'react-icons/pi';
 import { HiMiniXMark } from 'react-icons/hi2';
 
-const ModalBg = styled.div`
+const fadeIn = keyframes`
+    0%{
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+`;
+
+const fadeOut = keyframes`
+    0%{
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+`;
+
+const modal = (isOpen: boolean) => css`
+    visibility: ${isOpen ? 'visible' : 'hidden'};
+    z-index: 1;
+    animation: ${isOpen ? fadeIn : fadeOut} 0.5s ease-out;
+    transition: all 0.5s ease-out;
+`;
+
+const ModalBg = styled.div<{ isOpen: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
-    z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4);
+    ${(props) => modal(props.isOpen)}
 `;
 
-const ModalContainer = styled.div`
+const ModalContainer = styled.div<{ isOpen: boolean }>`
     position: absolute;
     padding: 60px;
     width: 80%;
@@ -27,6 +54,7 @@ const ModalContainer = styled.div`
     border-radius: 5px;
     overflow: hidden;
     overflow-y: scroll;
+    ${(props) => modal(props.isOpen)}
 
     &::-webkit-scrollbar {
         width: 8px;
@@ -203,17 +231,17 @@ const CloseIcon = styled(HiMiniXMark)`
     cursor: pointer;
 `;
 
-const Modal = ({ proj, setIsOpen }: IprojProps) => {
+const Modal = ({ proj, setIsOpen, isOpen }: IprojProps) => {
     const stack = Object.values(proj.stack);
     const lesson = Object.entries(proj.lesson);
-
+    console.log(proj);
     const handleOnClick = () => {
-        setIsOpen(false);
+        setIsOpen(!isOpen);
     };
 
     return (
-        <ModalBg>
-            <ModalContainer>
+        <ModalBg isOpen={isOpen}>
+            <ModalContainer isOpen={isOpen}>
                 <CloseIcon onClick={handleOnClick} />
                 <ModalContent>
                     <ImgContainer>
@@ -277,19 +305,6 @@ const Modal = ({ proj, setIsOpen }: IprojProps) => {
                             </StackContainer>
                         </ContentBox>
                         <ContentBox>
-                            <ContentTitle>🌏 프로젝트 소개</ContentTitle>
-                            <ul>
-                                {proj.features.map((a, i) => {
-                                    return (
-                                        <LiItem key={i}>
-                                            <LiIcon />
-                                            {a}
-                                        </LiItem>
-                                    );
-                                })}
-                            </ul>
-                        </ContentBox>
-                        <ContentBox>
                             <ContentTitle>💻 담당 기능</ContentTitle>
                             <ul>
                                 {proj.role.map((a, i) => {
@@ -311,7 +326,9 @@ const Modal = ({ proj, setIsOpen }: IprojProps) => {
                                             <LessonTit key={i}>
                                                 {a[0]}
                                             </LessonTit>
-                                            <Lesson key={i}>{a[1]}</Lesson>
+                                            <Lesson key={i.toString()}>
+                                                {a[1]}
+                                            </Lesson>
                                         </>
                                     );
                                 })}

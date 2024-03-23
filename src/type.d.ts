@@ -34,6 +34,7 @@ interface Ilink {
 interface IprojProps {
     proj: Iprojects;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    isOpen: boolean;
 }
 
 interface IprojectProps {

@@ -55,7 +55,7 @@ const Card = styled.div<{ view: boolean }>`
         -ms-transform: scale(0, 1);
         transform: scale(0, 1);
         -webkit-transition: transform 0.75s cubic-bezier(1, 0, 0, 1);
-        transition: transform 0.75s cubic-bezier(1, 0, 0, 1);
+        transition: transform 0.6s cubic-bezier(1, 0, 0, 1);
         z-index: -1;
     }
 
@@ -72,7 +72,7 @@ const Card = styled.div<{ view: boolean }>`
     &:hover {
         transform: translate3d(0, -3px, 0);
         transition: all 0.75s ease 0s;
-        transition-delay: 0.4s;
+        transition-delay: 0.5s;
     }
 `;
 
@@ -133,7 +133,7 @@ const Project3 = ({ data }: IprojectProps) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const handleOnClick = () => {
-        setIsOpen(true);
+        setIsOpen(!isOpen);
     };
 
     return (
@@ -159,7 +159,7 @@ const Project3 = ({ data }: IprojectProps) => {
                     <Img src={cover} />
                 </ImgWrapper>
             </Card>
-            {isOpen && <Modal proj={proj} setIsOpen={setIsOpen} />}
+            <Modal proj={proj} setIsOpen={setIsOpen} isOpen={isOpen} />
         </>
     );
 };
