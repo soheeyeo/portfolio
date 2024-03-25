@@ -11,7 +11,11 @@ const skillsSchema: Schema = new Schema({
         required: true,
     },
     content: {
-        type: [String],
+        type: String,
+    },
+    src: {
+        type: String,
+        required: true,
     },
 });
 
