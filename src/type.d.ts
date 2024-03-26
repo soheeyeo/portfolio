@@ -18,9 +18,11 @@ interface Iprojects {
 }
 
 interface Iskills {
+    _id: string;
     name: string;
     category: string;
-    content: string[];
+    content: string;
+    src: string;
 }
 
 interface Ilink {

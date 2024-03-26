@@ -1,18 +1,7 @@
 import styled from 'styled-components';
-import js from '../../assets/logo/js.png';
-import ts from '../../assets/logo/ts.png';
-import html from '../../assets/logo/html.png';
-import css from '../../assets/logo/css.png';
-// import react from '../../assets/logo/react.png';
-// import styledComponent from '../../assets/logo/styledcomponent.png';
-// import sass from '../../assets/logo/sass.png';
-// import next from '../../assets/logo/next.png';
-// import vue from '../../assets/logo/vue.png';
-// import tailwind from '../../assets/logo/tailwind.png';
-// import bootstrap from '../../assets/logo/bootstrap.png';
-// import github from '../../assets/logo/github.png';
-// import git from '../../assets/logo/git.png';
-// import figma from '../../assets/logo/figma.png';
+import { useState, useEffect } from 'react';
+import { getSkills } from '../../api';
+import { AxiosResponse } from 'axios';
 
 const Section = styled.section`
     margin: 60px auto 0;
@@ -21,7 +10,7 @@ const Section = styled.section`
 `;
 
 const Title = styled.h1`
-    padding: 80px 0 120px;
+    padding: 80px 0;
     font-size: 64px;
     font-family: ${(props) => props.theme.titleFont};
     font-weight: 600;
@@ -34,22 +23,33 @@ const Content = styled.div`
     grid-template-columns: repeat(2, 1fr);
 `;
 
-const SkillBox1 = styled.div``;
+const SkillBox = styled.div`
+    font-family: ${(props) => props.theme.contentFont};
+`;
 
 const SkillName1 = styled.p`
     padding-bottom: 8px;
     font-size: 20px;
-    font-family: ${(props) => props.theme.contentFont};
     font-weight: 500;
     border-bottom: 1px solid #fff;
 `;
 
 const SkillContainer = styled.div``;
 
-const SkillContent = styled.div`
+const SkillContainerFlat = styled.div`
     display: flex;
+    gap: 20px;
     margin-top: 20px;
 `;
+
+const SkillContent = styled.div`
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 20px;
+`;
+
+const SkillContentFlat = styled.div``;
 
 const ImgWrapper = styled.div`
     width: 50px;
@@ -62,29 +62,114 @@ const Img = styled.img`
 const SkillDesc = styled.span``;
 
 const Skills = () => {
-    const skill = ['Front-End', 'Library', 'Framework', 'Tools'];
-    const front = [js, ts, html, css];
+    const [data, setData] = useState<Iskills[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = (): void => {
+        getSkills()
+            .then((res: AxiosResponse<ApiSkillsType> | undefined) => {
+                if (res) {
+                    setData(res.data.skills);
+                    setIsLoading(true);
+                }
+            })
+            .catch((err: Error) => console.log(err));
+    };
+
+    const frontendItems = data.filter((item) => item.category === 'Front-end');
+
+    const libraryItems = data.filter((item) => item.category === 'Library');
+
+    const frameworkItems = data.filter((item) => item.category === 'Framework');
+
+    const toolsItems = data.filter((item) => item.category === 'Tools');
 
     return (
         <Section>
             <Title>SKILLS</Title>
-            <Content>
-                {skill.map((i) => (
-                    <SkillBox1 key={i}>
-                        <SkillName1>{i}</SkillName1>
+            {isLoading && (
+                <Content>
+                    <SkillBox>
+                        <SkillName1>Front-End</SkillName1>
                         <SkillContainer>
-                            {front.map((i) => (
-                                <SkillContent key={i}>
+                            {frontendItems.map((a) => (
+                                <SkillContent key={a._id}>
                                     <ImgWrapper>
-                                        <Img src={i} />
+                                        <Img
+                                            src={require(
+                                                '../../assets/logo/' +
+                                                    a.src +
+                                                    '.png',
+                                            )}
+                                        />
                                     </ImgWrapper>
-                                    <SkillDesc></SkillDesc>
+                                    <SkillDesc>{a.content}</SkillDesc>
                                 </SkillContent>
                             ))}
                         </SkillContainer>
-                    </SkillBox1>
-                ))}
-            </Content>
+                    </SkillBox>
+                    <SkillBox>
+                        <SkillName1>Framework</SkillName1>
+                        <SkillContainer>
+                            {frameworkItems.map((a, i) => (
+                                <SkillContent key={i}>
+                                    <ImgWrapper>
+                                        <Img
+                                            src={require(
+                                                '../../assets/logo/' +
+                                                    a.src +
+                                                    '.png',
+                                            )}
+                                        />
+                                    </ImgWrapper>
+                                    <SkillDesc>{a.content}</SkillDesc>
+                                </SkillContent>
+                            ))}
+                        </SkillContainer>
+                    </SkillBox>
+                    <SkillBox>
+                        <SkillName1>Library</SkillName1>
+                        <SkillContainer>
+                            {libraryItems.map((a, i) => (
+                                <SkillContent key={i}>
+                                    <ImgWrapper>
+                                        <Img
+                                            src={require(
+                                                '../../assets/logo/' +
+                                                    a.src +
+                                                    '.png',
+                                            )}
+                                        />
+                                    </ImgWrapper>
+                                    <SkillDesc>{a.content}</SkillDesc>
+                                </SkillContent>
+                            ))}
+                        </SkillContainer>
+                    </SkillBox>
+                    <SkillBox>
+                        <SkillName1>Tools</SkillName1>
+                        <SkillContainerFlat>
+                            {toolsItems.map((a, i) => (
+                                <SkillContentFlat key={i}>
+                                    <ImgWrapper>
+                                        <Img
+                                            src={require(
+                                                '../../assets/logo/' +
+                                                    a.src +
+                                                    '.png',
+                                            )}
+                                        />
+                                    </ImgWrapper>
+                                </SkillContentFlat>
+                            ))}
+                        </SkillContainerFlat>
+                    </SkillBox>
+                </Content>
+            )}
         </Section>
     );
 };
