@@ -1,30 +1,66 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { useState, useEffect } from 'react';
 import { getSkills } from '../../api';
 import { AxiosResponse } from 'axios';
+import useScrollAnimation from '../../hooks/useScrollAnimation';
 
 const Section = styled.section`
-    margin: 60px auto 0;
+    margin: 60px auto;
     width: 80%;
-    height: calc(100vh - 60px);
 `;
 
-const Title = styled.h1`
+const animation = keyframes`
+    0%{
+        opacity: 0;
+        transform: translate3d(-30px, 0, 0);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+`;
+
+const Title = styled.h1<{ view: boolean }>`
     padding: 80px 0;
     font-size: 64px;
     font-family: ${(props) => props.theme.titleFont};
     font-weight: 600;
     color: #c8b6ff;
+    opacity: ${(props) => (props.view ? 1 : 0)};
+    animation: ${(props) =>
+        props.view &&
+        css`
+            ${animation} 1s ease-in-out
+        `};
 `;
 
 const Content = styled.div`
     display: grid;
-    gap: 80px;
+    gap: 60px;
     grid-template-columns: repeat(2, 1fr);
 `;
 
-const SkillBox = styled.div`
+const nameAnimation = keyframes`
+    0%{
+        opacity: 0;
+        transform: translate3d(-30px, 0, 0);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+`;
+
+const SkillBox = styled.div<{ view: boolean }>`
     font-family: ${(props) => props.theme.contentFont};
+    opacity: ${(props) => (props.view ? 1 : 0)};
+    animation: ${(props) =>
+        props.view &&
+        css`
+            ${nameAnimation} 1s ease-in-out
+        `};
 `;
 
 const SkillName1 = styled.p`
@@ -34,7 +70,32 @@ const SkillName1 = styled.p`
     border-bottom: 1px solid #fff;
 `;
 
-const SkillContainer = styled.div``;
+const contentAnimation = keyframes`
+    0%{
+        opacity: 0;
+        transform: translate3d(0, -30px, 0);
+    }
+
+    60%{
+        opacity: 0;
+        transform: translate3d(0, -30px, 0);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+`;
+
+const SkillContainer = styled.div<{ view: boolean }>`
+    opacity: ${(props) => (props.view ? 1 : 0)};
+    animation: ${(props) =>
+        props.view &&
+        css`
+            ${contentAnimation} 1s ease-in-out
+        `};
+    transition-delay: 0.75s;
+`;
 
 const SkillContainerFlat = styled.div`
     display: flex;
@@ -49,7 +110,15 @@ const SkillContent = styled.div`
     margin-top: 20px;
 `;
 
-const SkillContentFlat = styled.div``;
+const SkillContentFlat = styled.div<{ view: boolean }>`
+    opacity: ${(props) => (props.view ? 1 : 0)};
+    animation: ${(props) =>
+        props.view &&
+        css`
+            ${contentAnimation} 1s ease-in-out
+        `};
+    transition-delay: 0.75s;
+`;
 
 const ImgWrapper = styled.div`
     width: 50px;
@@ -64,6 +133,8 @@ const SkillDesc = styled.span``;
 const Skills = () => {
     const [data, setData] = useState<Iskills[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+
+    const { ref, isInView } = useScrollAnimation();
 
     useEffect(() => {
         fetchData();
@@ -90,12 +161,14 @@ const Skills = () => {
 
     return (
         <Section>
-            <Title>SKILLS</Title>
+            <Title ref={ref} view={isInView}>
+                SKILLS
+            </Title>
             {isLoading && (
                 <Content>
-                    <SkillBox>
+                    <SkillBox ref={ref} view={isInView}>
                         <SkillName1>Front-End</SkillName1>
-                        <SkillContainer>
+                        <SkillContainer ref={ref} view={isInView}>
                             {frontendItems.map((a) => (
                                 <SkillContent key={a._id}>
                                     <ImgWrapper>
@@ -112,9 +185,9 @@ const Skills = () => {
                             ))}
                         </SkillContainer>
                     </SkillBox>
-                    <SkillBox>
+                    <SkillBox ref={ref} view={isInView}>
                         <SkillName1>Framework</SkillName1>
-                        <SkillContainer>
+                        <SkillContainer ref={ref} view={isInView}>
                             {frameworkItems.map((a, i) => (
                                 <SkillContent key={i}>
                                     <ImgWrapper>
@@ -131,9 +204,9 @@ const Skills = () => {
                             ))}
                         </SkillContainer>
                     </SkillBox>
-                    <SkillBox>
+                    <SkillBox ref={ref} view={isInView}>
                         <SkillName1>Library</SkillName1>
-                        <SkillContainer>
+                        <SkillContainer ref={ref} view={isInView}>
                             {libraryItems.map((a, i) => (
                                 <SkillContent key={i}>
                                     <ImgWrapper>
@@ -150,11 +223,15 @@ const Skills = () => {
                             ))}
                         </SkillContainer>
                     </SkillBox>
-                    <SkillBox>
+                    <SkillBox ref={ref} view={isInView}>
                         <SkillName1>Tools</SkillName1>
                         <SkillContainerFlat>
                             {toolsItems.map((a, i) => (
-                                <SkillContentFlat key={i}>
+                                <SkillContentFlat
+                                    key={i}
+                                    ref={ref}
+                                    view={isInView}
+                                >
                                     <ImgWrapper>
                                         <Img
                                             src={require(
