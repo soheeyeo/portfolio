@@ -94,7 +94,6 @@ const SkillContainer = styled.div<{ view: boolean }>`
         css`
             ${contentAnimation} 1s ease-in-out
         `};
-    transition-delay: 0.75s;
 `;
 
 const SkillContainerFlat = styled.div`
@@ -117,7 +116,6 @@ const SkillContentFlat = styled.div<{ view: boolean }>`
         css`
             ${contentAnimation} 1s ease-in-out
         `};
-    transition-delay: 0.75s;
 `;
 
 const ImgWrapper = styled.div`

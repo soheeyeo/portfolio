@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { LuMail } from 'react-icons/lu';
-import { FaGithub } from 'react-icons/fa';
-import { SiVelog } from 'react-icons/si';
 import { getAbout } from '../../api';
 import { AxiosResponse } from 'axios';
 
@@ -59,34 +56,6 @@ const Intro = styled.p`
     color: #fff;
 `;
 
-const IconContainer = styled.div`
-    display: flex;
-    margin-top: 60px;
-    gap: 60px;
-    font-size: 20px;
-    font-family: ${(props) => props.theme.contentFont};
-    color: #c8b6ff;
-`;
-
-const EmailIcon = styled(LuMail)`
-    margin-right: 10px;
-    vertical-align: middle;
-`;
-
-const Link = styled.a`
-    color: #c8b6ff;
-`;
-
-const GitHubIcon = styled(FaGithub)`
-    margin-right: 10px;
-    vertical-align: top;
-`;
-
-const BlogIcon = styled(SiVelog)`
-    margin-right: 10px;
-    vertical-align: top;
-`;
-
 const About = () => {
     const [data, setData] = useState<Iabout[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -119,26 +88,6 @@ const About = () => {
                     </IntroBtn>
                     <IntroContainer>
                         <Intro>{data[0].info}</Intro>
-                        <IconContainer>
-                            <p>
-                                <EmailIcon />
-                                {data[0].email}
-                            </p>
-                            <Link
-                                href="https://github.com/soheeyeo"
-                                target="_blank"
-                            >
-                                <GitHubIcon />
-                                GitHub
-                            </Link>
-                            <Link
-                                href="https://velog.io/@florence_y/posts"
-                                target="_blank"
-                            >
-                                <BlogIcon />
-                                Blog
-                            </Link>
-                        </IconContainer>
                     </IntroContainer>
                 </ContentsContainer>
             ) : (
