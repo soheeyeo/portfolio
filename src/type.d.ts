@@ -60,3 +60,8 @@ type ApiSkillsType = {
     status: string;
     skills: Iskills[];
 };
+
+type sizePropsType = {
+    width: number;
+    height: number;
+};
