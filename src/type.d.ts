@@ -65,3 +65,8 @@ type sizePropsType = {
     width: number;
     height: number;
 };
+
+interface ICircle {
+    update: () => void;
+    draw: (ctx: CanvasRenderingContext2D) => void;
+}
