@@ -1,5 +1,6 @@
 import React from 'react';
 import { GlobalStyle } from './styles/Globalstyle';
+import Cover from './components/section/Cover';
 import Navbar from './components/navbar/Navbar';
 import About from './components/section/About';
 import Projects from './components/section/Projects';
@@ -10,6 +11,7 @@ const App = () => {
     return (
         <>
             <GlobalStyle />
+            <Cover />
             <Navbar />
             <About />
             <Projects />

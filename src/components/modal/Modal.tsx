@@ -234,7 +234,7 @@ const CloseIcon = styled(HiMiniXMark)`
 const Modal = ({ proj, setIsOpen, isOpen }: IprojProps) => {
     const stack = Object.values(proj.stack);
     const lesson = Object.entries(proj.lesson);
-    console.log(proj);
+
     const handleOnClick = () => {
         setIsOpen(!isOpen);
     };
