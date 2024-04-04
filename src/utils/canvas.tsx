@@ -5,13 +5,13 @@ const Canvas = ({ width, height }: sizePropsType) => {
         useRef<HTMLCanvasElement>(null);
 
     const colors = [
-        '#C8B6FF',
-        '#E7C6FF',
-        '#FFD6FF',
-        '#FFDCE2',
-        '#FFEAE5',
-        '#C1C3F3',
-        '#B8C0FF',
+        'rgba(200, 182, 255, 0.7)',
+        'rgba(231, 198, 255, 0.7)',
+        'rgba(255, 214, 255, 0.7)',
+        'rgba(255, 220, 226, 0.7)',
+        'rgba(255, 234, 229, 0.7)',
+        'rgba(193, 195, 243, 0.7)',
+        'rgba(184, 192, 255, 0.7)',
     ];
 
     const random = (min: number, max: number) => {
@@ -50,8 +50,8 @@ const Canvas = ({ width, height }: sizePropsType) => {
                     this.radius += 0.3;
                 }
             } else {
-                this.vx *= -0.5;
-                this.vy *= -0.5;
+                this.vx *= -0.8;
+                this.vy *= -0.8;
                 this.x += this.vx;
                 this.y += this.vy;
             }
@@ -68,8 +68,8 @@ const Canvas = ({ width, height }: sizePropsType) => {
     const circles: Circle[] = [];
 
     const moveCircle = () => {
-        const fin = 10 - circles.length;
-        for (let i = 0; i < fin && i < 10; i++) {
+        const fin = 15 - circles.length;
+        for (let i = 0; i < fin && i < 15; i++) {
             const circle = new Circle();
             circles.push(circle);
         }
@@ -110,8 +110,11 @@ const Canvas = ({ width, height }: sizePropsType) => {
         setCanvas();
 
         if (ctx) {
-            setInterval(moveCircle, 10);
+            const moveInterval = setInterval(moveCircle, 16);
             drawCircle(ctx);
+            setTimeout(() => {
+                clearInterval(moveInterval);
+            }, 25000);
         }
     }, [width, height]);
 
