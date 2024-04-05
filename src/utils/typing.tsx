@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, RefObject } from 'react';
 
 const cursor = keyframes`
     0%, 50%, 100% {
@@ -25,7 +25,7 @@ const Txt = styled.h1`
 
 const Cursor = styled.div`
     display: inline-block;
-    margin-left: 15px;
+    margin-left: 5px;
     vertical-align: top;
     width: 2px;
     height: 96px;
@@ -35,39 +35,90 @@ const Cursor = styled.div`
 
 const Typing = () => {
     const text = 'User-focused \n Frontend Developer';
-    const [type, setType] = useState<string>('');
+    const [letter, setLetter] = useState<string>('');
     const [index, setIndex] = useState<number>(0);
     const [isTypingDone, setIsTypingDone] = useState<boolean>(false);
 
+    const txtRef: RefObject<HTMLHeadingElement> =
+        useRef<HTMLHeadingElement>(null);
+
+    const lastTimeStamp = useRef<number | null>(null);
+
+    const callback = (entries: IntersectionObserverEntry[]) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                setIndex(0);
+                setLetter('');
+                setIsTypingDone(false);
+            }
+        });
+    };
+
+    const options = {
+        threshold: 0,
+    };
+
+    // 사용자의 화면에 txtRef가 보일 때 실행
     useEffect(() => {
-        const typingInterval = setInterval(() => {
+        if (!txtRef.current) return;
+
+        if (txtRef.current) {
+            const observer = new IntersectionObserver(callback, options);
+            observer.observe(txtRef.current);
+
+            return () => {
+                observer.disconnect();
+            };
+        }
+    }, []);
+
+    // 타이핑 애니메이션 설정
+    useEffect(() => {
+        let animationFrameId: number;
+
+        const typingAnimation = (timeStamp: number) => {
             if (isTypingDone) {
-                clearInterval(typingInterval);
+                cancelAnimationFrame(animationFrameId);
                 return;
             }
             if (index >= text.length) {
                 setIsTypingDone(true);
                 return;
             }
+            if (lastTimeStamp.current === null)
+                lastTimeStamp.current = timeStamp;
 
-            const currentType = text[index];
-            setType((prev) => prev + currentType);
-
-            if (currentType === '\n') {
-                setIndex((prev) => prev + 2);
-            } else {
-                setIndex((prev) => prev + 1);
+            // 경과 시간 100ms 이후 다음 글자 표시
+            const elapsed = timeStamp - lastTimeStamp.current;
+            if (elapsed > 100) {
+                lastTimeStamp.current = timeStamp;
+                if (text.length > index) {
+                    const currentLetter = text[index];
+                    setLetter((prev) => {
+                        const result = (prev += currentLetter);
+                        return result;
+                    });
+                    if (currentLetter === '\n') {
+                        setIndex((prev) => prev + 2);
+                    } else {
+                        setIndex((prev) => prev + 1);
+                    }
+                }
             }
-        }, 200);
+
+            animationFrameId = requestAnimationFrame(typingAnimation);
+        };
+
+        animationFrameId = requestAnimationFrame(typingAnimation);
 
         return () => {
-            clearInterval(typingInterval);
+            cancelAnimationFrame(animationFrameId);
         };
     }, [text, index, isTypingDone]);
 
     return (
-        <Txt>
-            {type}
+        <Txt ref={txtRef}>
+            {letter}
             <Cursor />
         </Txt>
     );
