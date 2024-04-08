@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
+import { useEffect } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import { FaLink } from 'react-icons/fa6';
 import { BsCheck } from 'react-icons/bs';
@@ -233,11 +234,39 @@ const CloseIcon = styled(HiMiniXMark)`
 
 const Modal = ({ proj, setIsOpen, isOpen }: IprojProps) => {
     const stack = Object.values(proj.stack);
-    const lesson = Object.entries(proj.lesson);
+    const lesson = proj.lesson ? Object.entries(proj.lesson) : '';
 
     const handleOnClick = () => {
         setIsOpen(!isOpen);
     };
+
+    // 스크롤 방지
+    const preventScroll = () => {
+        const currentScroll = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        document.body.style.top = `-${currentScroll}px`;
+        document.body.style.overflowY = 'scroll';
+        return currentScroll;
+    };
+
+    // 스크롤 허용
+    const allowScroll = (prevScroll: number) => {
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.top = '';
+        document.body.style.overflowY = '';
+        window.scrollTo(0, prevScroll);
+    };
+
+    if (isOpen) {
+        useEffect(() => {
+            const prevScroll = preventScroll();
+            return () => {
+                allowScroll(prevScroll);
+            };
+        }, []);
+    }
 
     return (
         <ModalBg isOpen={isOpen}>
@@ -261,13 +290,18 @@ const Modal = ({ proj, setIsOpen, isOpen }: IprojProps) => {
                                 <GitHubIcon />
                             </Link>
                         </LinkContainer>
-                        <AccountContainer>
-                            <AccountTxt>테스트 계정</AccountTxt>
-                            <span>아이디</span>
-                            <AccountInfo>{proj.link.accountId}</AccountInfo>
-                            <span>패스워드</span>
-                            <AccountInfo>{proj.link.accountPw}</AccountInfo>
-                        </AccountContainer>
+                        {proj.link.accountId && proj.link.accountPw ? (
+                            <AccountContainer>
+                                <AccountTxt>테스트 계정</AccountTxt>
+                                <span>아이디</span>
+                                <AccountInfo>{proj.link.accountId}</AccountInfo>
+                                <span>패스워드</span>
+                                <AccountInfo>{proj.link.accountPw}</AccountInfo>
+                            </AccountContainer>
+                        ) : (
+                            ''
+                        )}
+
                         <ContentBox>
                             <ContentTitle>📌 프로젝트 목표</ContentTitle>
                             <ul>
@@ -317,23 +351,25 @@ const Modal = ({ proj, setIsOpen, isOpen }: IprojProps) => {
                                 })}
                             </ul>
                         </ContentBox>
-                        <ContentBox>
-                            <ContentTitle>💡 레슨런</ContentTitle>
-                            <div>
-                                {lesson.map((a, i) => {
-                                    return (
-                                        <>
-                                            <LessonTit key={i}>
-                                                {a[0]}
-                                            </LessonTit>
-                                            <Lesson key={i.toString()}>
-                                                {a[1]}
-                                            </Lesson>
-                                        </>
-                                    );
-                                })}
-                            </div>
-                        </ContentBox>
+                        {lesson && (
+                            <ContentBox>
+                                <ContentTitle>💡 레슨런</ContentTitle>
+                                <div>
+                                    {lesson.map((a, i) => {
+                                        return (
+                                            <>
+                                                <LessonTit key={i}>
+                                                    {a[0]}
+                                                </LessonTit>
+                                                <Lesson key={i.toString()}>
+                                                    {a[1]}
+                                                </Lesson>
+                                            </>
+                                        );
+                                    })}
+                                </div>
+                            </ContentBox>
+                        )}
                     </ContentContainer>
                 </ModalContent>
             </ModalContainer>

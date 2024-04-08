@@ -5,6 +5,7 @@ import { AxiosResponse } from 'axios';
 import Project1 from './Projects/Project1';
 import Project2 from './Projects/Project2';
 import Project3 from './Projects/Project3';
+import Project4 from './Projects/Project4';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
 
 const Section = styled.section`
@@ -70,6 +71,7 @@ const Projects = () => {
                     <Project3 data={data} />
                     <Project2 data={data} />
                     <Project1 data={data} />
+                    <Project4 data={data} />
                 </>
             ) : (
                 ''
