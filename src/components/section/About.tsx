@@ -1,7 +1,8 @@
+import styled, { keyframes, css } from 'styled-components';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { getAbout } from '../../api';
 import { AxiosResponse } from 'axios';
+import useScrollAnimation from '../../hooks/useScrollAnimation';
 
 const Section = styled.section`
     margin: 60px auto 0;
@@ -9,12 +10,30 @@ const Section = styled.section`
     height: calc(100vh - 60px);
 `;
 
-const NameBox = styled.div`
+const animation = keyframes`
+    0%{
+        opacity: 0;
+        transform: translate3d(-30px, 0, 0);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+`;
+
+const NameBox = styled.div<{ view: boolean }>`
     padding: 80px 0 120px;
     width: 100%;
     font-family: ${(props) => props.theme.titleFont};
     font-weight: 600;
     color: #c8b6ff;
+    opacity: ${(props) => (props.view ? 1 : 0)};
+    animation: ${(props) =>
+        props.view &&
+        css`
+            ${animation} 1s ease-in-out
+        `};
 `;
 
 const Name = styled.p`
@@ -43,8 +62,31 @@ const IntroTxt = styled.span`
     color: #cac3e1;
 `;
 
-const IntroContainer = styled.div`
+const introAnimation = keyframes`
+    0%{
+        opacity: 0;
+        transform: translate3d(0, -30px, 0);
+    }
+
+    60%{
+        opacity: 0;
+        transform: translate3d(0, -30px, 0);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+`;
+
+const IntroContainer = styled.div<{ view: boolean }>`
     width: 70%;
+    opacity: ${(props) => (props.view ? 1 : 0)};
+    animation: ${(props) =>
+        props.view &&
+        css`
+            ${introAnimation} 1s ease-in-out
+        `};
 `;
 
 const Intro = styled.p`
@@ -59,6 +101,8 @@ const Intro = styled.p`
 const About = () => {
     const [data, setData] = useState<Iabout[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+
+    const { ref, isInView } = useScrollAnimation();
 
     useEffect(() => {
         fetchData();
@@ -78,7 +122,7 @@ const About = () => {
     return (
         <Section>
             <h1 className="a11yhidden">ABOUT</h1>
-            <NameBox>
+            <NameBox ref={ref} view={isInView}>
                 <Name>SOHEE YEO</Name>
             </NameBox>
             {isLoading ? (
@@ -86,7 +130,7 @@ const About = () => {
                     <IntroBtn>
                         <IntroTxt>Intro</IntroTxt>
                     </IntroBtn>
-                    <IntroContainer>
+                    <IntroContainer ref={ref} view={isInView}>
                         <Intro>{data[0].info}</Intro>
                     </IntroContainer>
                 </ContentsContainer>

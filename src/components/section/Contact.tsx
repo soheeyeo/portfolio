@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { LuMail } from 'react-icons/lu';
 import { FaGithub } from 'react-icons/fa';
 import { SiVelog } from 'react-icons/si';
+import useScrollAnimation from '../../hooks/useScrollAnimation';
 
 const Section = styled.section`
     margin: 60px auto 0;
@@ -9,24 +10,65 @@ const Section = styled.section`
     height: calc(100vh - 60px);
 `;
 
-const Title = styled.h1`
+const animation = keyframes`
+    0%{
+        opacity: 0;
+        transform: translate3d(-30px, 0, 0);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+`;
+
+const Title = styled.h1<{ view: boolean }>`
     padding: 80px 0 120px;
     width: 100%;
     font-size: 64px;
     font-family: ${(props) => props.theme.titleFont};
     font-weight: 600;
     color: #c8b6ff;
+    opacity: ${(props) => (props.view ? 1 : 0)};
+    animation: ${(props) =>
+        props.view &&
+        css`
+            ${animation} 1s ease-in-out
+        `};
 `;
 
-const IconContainer = styled.div`
+const introAnimation = keyframes`
+    0%{
+        opacity: 0;
+        transform: translate3d(0, -30px, 0);
+    }
+
+    60%{
+        opacity: 0;
+        transform: translate3d(0, -30px, 0);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+`;
+
+const IconContainer = styled.div<{ view: boolean }>`
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    padding: 0 20%;
     margin-top: 100px;
-    gap: 60px;
     font-size: 20px;
     font-family: ${(props) => props.theme.contentFont};
     color: #fff;
+    opacity: ${(props) => (props.view ? 1 : 0)};
+    animation: ${(props) =>
+        props.view &&
+        css`
+            ${introAnimation} 1s ease-in-out
+        `};
 `;
 
 const EmailIcon = styled(LuMail)`
@@ -49,11 +91,14 @@ const BlogIcon = styled(SiVelog)`
 `;
 
 const Contact = () => {
+    const { ref, isInView } = useScrollAnimation();
+
     return (
         <Section>
-            <h1 className="a11yhidden">Contact</h1>
-            <Title>CONTACT</Title>
-            <IconContainer>
+            <Title ref={ref} view={isInView}>
+                CONTACT
+            </Title>
+            <IconContainer ref={ref} view={isInView}>
                 <p>
                     <EmailIcon />
                     sohee407@gmail.com
