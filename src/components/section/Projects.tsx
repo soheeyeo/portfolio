@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { getProjects } from '../../api';
 import { AxiosResponse } from 'axios';
@@ -66,15 +66,13 @@ const Projects = () => {
             <Title ref={ref} view={isInView}>
                 PROJECTS
             </Title>
-            {isLoading ? (
+            {isLoading && (
                 <>
                     <Project3 data={data} />
                     <Project2 data={data} />
                     <Project1 data={data} />
                     <Project4 data={data} />
                 </>
-            ) : (
-                ''
             )}
         </Section>
     );

@@ -3,6 +3,7 @@ import cover from '../../../assets/cover/choco_d.jpg';
 import Modal from '../../modal/Modal';
 import { useState } from 'react';
 import useScrollAnimation from '../../../hooks/useScrollAnimation';
+import useMouseHandler from '../../../hooks/useMouseHandler';
 
 const animation = keyframes`
     0%{
@@ -29,7 +30,6 @@ const Card = styled.div<{ view: boolean }>`
     padding: 0 40px;
     margin-bottom: 200px;
     height: 70vh;
-    cursor: pointer;
     transition: all 0.75s ease 0s;
     opacity: ${(props) => (props.view ? 1 : 0)};
     animation: ${(props) =>
@@ -123,12 +123,28 @@ const Img = styled.img`
     border-radius: 10px;
 `;
 
+const Cursor = styled.div`
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    font-size: 14px;
+    font-family: ${(props) => props.theme.titleFont};
+    background-color: rgb(200, 182, 255, 0.7);
+    color: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+`;
+
 const Project4 = ({ data }: IprojectProps) => {
     const proj = data[3];
 
     const stack = Object.values(data[3].stack).flat();
 
     const { ref, isInView } = useScrollAnimation();
+
+    const { cardRef, mouseRef, xy } = useMouseHandler();
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -138,27 +154,36 @@ const Project4 = ({ data }: IprojectProps) => {
 
     return (
         <>
-            <Card ref={ref} view={isInView} onClick={handleOnClick}>
-                <ContentContainer>
-                    <ProjName>{proj.name}</ProjName>
-                    <ProjDesc>
-                        <ProjContent>{proj.intro}</ProjContent>
-                        <ProjType>{proj.type}</ProjType>
-                        <ProjTechContainer>
-                            {stack.map((a, i) => {
-                                return (
-                                    <ProjTechLi key={i}>
-                                        <ProjTech>{a}</ProjTech>
-                                    </ProjTechLi>
-                                );
-                            })}
-                        </ProjTechContainer>
-                    </ProjDesc>
-                </ContentContainer>
-                <ImgWrapper>
-                    <Img src={cover} />
-                </ImgWrapper>
-            </Card>
+            <div ref={cardRef}>
+                <Card ref={ref} view={isInView} onClick={handleOnClick}>
+                    <ContentContainer>
+                        <ProjName>{proj.name}</ProjName>
+                        <ProjDesc>
+                            <ProjContent>{proj.intro}</ProjContent>
+                            <ProjType>{proj.type}</ProjType>
+                            <ProjTechContainer>
+                                {stack.map((a, i) => {
+                                    return (
+                                        <ProjTechLi key={i}>
+                                            <ProjTech>{a}</ProjTech>
+                                        </ProjTechLi>
+                                    );
+                                })}
+                            </ProjTechContainer>
+                        </ProjDesc>
+                    </ContentContainer>
+                    <ImgWrapper>
+                        <Img src={cover} />
+                    </ImgWrapper>
+                    <Cursor
+                        ref={mouseRef}
+                        style={{ left: `${xy.x}px`, top: `${xy.y}px` }}
+                    >
+                        Learn More
+                    </Cursor>
+                </Card>
+            </div>
+
             <Modal proj={proj} setIsOpen={setIsOpen} isOpen={isOpen} />
         </>
     );
