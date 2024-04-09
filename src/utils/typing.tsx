@@ -44,23 +44,21 @@ const Typing = () => {
 
     const lastTimeStamp = useRef<number | null>(null);
 
-    const callback = (entries: IntersectionObserverEntry[]) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                setIndex(0);
-                setLetter('');
-                setIsTypingDone(false);
-            }
-        });
-    };
-
-    const options = {
-        threshold: 0,
-    };
-
     // 사용자의 화면에 txtRef가 보일 때 실행
     useEffect(() => {
-        if (!txtRef.current) return;
+        const callback = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setIndex(0);
+                    setLetter('');
+                    setIsTypingDone(false);
+                }
+            });
+        };
+
+        const options = {
+            threshold: 0,
+        };
 
         if (txtRef.current) {
             const observer = new IntersectionObserver(callback, options);

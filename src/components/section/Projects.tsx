@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { getProjects } from '../../api';
 import { AxiosResponse } from 'axios';
