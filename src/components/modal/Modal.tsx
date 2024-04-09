@@ -259,14 +259,10 @@ const Modal = ({ proj, setIsOpen, isOpen }: IprojProps) => {
         window.scrollTo(0, prevScroll);
     };
 
-    if (isOpen) {
-        useEffect(() => {
-            const prevScroll = preventScroll();
-            return () => {
-                allowScroll(prevScroll);
-            };
-        }, []);
-    }
+    useEffect(() => {
+        const prevScroll = preventScroll();
+        allowScroll(prevScroll);
+    }, [isOpen]);
 
     return (
         <ModalBg isOpen={isOpen}>
