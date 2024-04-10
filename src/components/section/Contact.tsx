@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
+import { MutableRefObject, forwardRef } from 'react';
 import { LuMail } from 'react-icons/lu';
 import { FaGithub } from 'react-icons/fa';
 import { SiVelog } from 'react-icons/si';
@@ -90,15 +91,23 @@ const BlogIcon = styled(SiVelog)`
     vertical-align: top;
 `;
 
-const Contact = () => {
-    const { ref, isInView } = useScrollAnimation();
+const Contact = forwardRef((_, ref) => {
+    const { animationRef, isInView } = useScrollAnimation();
+
+    const { current } = ref as MutableRefObject<HTMLElement[]>;
 
     return (
-        <Section>
-            <Title ref={ref} view={isInView}>
+        <Section
+            ref={(contactRef) => {
+                if (ref && current && contactRef) {
+                    current[3] = contactRef;
+                }
+            }}
+        >
+            <Title ref={animationRef} view={isInView}>
                 CONTACT
             </Title>
-            <IconContainer ref={ref} view={isInView}>
+            <IconContainer ref={animationRef} view={isInView}>
                 <p>
                     <EmailIcon />
                     sohee407@gmail.com
@@ -114,6 +123,8 @@ const Contact = () => {
             </IconContainer>
         </Section>
     );
-};
+});
+
+Contact.displayName = 'Contact';
 
 export default Contact;

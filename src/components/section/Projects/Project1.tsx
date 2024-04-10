@@ -1,7 +1,7 @@
 import styled, { keyframes, css } from 'styled-components';
 import cover from '../../../assets/cover/whale_d.jpg';
 import Modal from '../../modal/Modal';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import useScrollAnimation from '../../../hooks/useScrollAnimation';
 import useMouseHandler from '../../../hooks/useMouseHandler';
 
@@ -142,7 +142,7 @@ const Project1 = ({ data }: IprojectProps) => {
 
     const stack = Object.values(data[0].stack).flat();
 
-    const { ref, isInView } = useScrollAnimation();
+    const { animationRef, isInView } = useScrollAnimation();
 
     const { cardRef, mouseRef, xy } = useMouseHandler();
 
@@ -155,7 +155,11 @@ const Project1 = ({ data }: IprojectProps) => {
     return (
         <>
             <div ref={cardRef}>
-                <Card ref={ref} view={isInView} onClick={handleOnClick}>
+                <Card
+                    ref={animationRef}
+                    view={isInView}
+                    onClick={handleOnClick}
+                >
                     <ContentContainer>
                         <ProjName>{proj.name}</ProjName>
                         <ProjDesc>

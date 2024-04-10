@@ -33,7 +33,7 @@ const useScrollAnimation = () => {
 
     return {
         isInView: isInView,
-        ref: ref,
+        animationRef: ref,
     };
 };
 

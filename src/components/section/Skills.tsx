@@ -1,5 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef, MutableRefObject } from 'react';
 import { getSkills } from '../../api';
 import { AxiosResponse } from 'axios';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
@@ -128,11 +128,13 @@ const Img = styled.img`
 
 const SkillDesc = styled.span``;
 
-const Skills = () => {
+const Skills = forwardRef((_, ref) => {
     const [data, setData] = useState<Iskills[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const { ref, isInView } = useScrollAnimation();
+    const { animationRef, isInView } = useScrollAnimation();
+
+    const { current } = ref as MutableRefObject<HTMLElement[]>;
 
     useEffect(() => {
         fetchData();
@@ -158,15 +160,21 @@ const Skills = () => {
     const toolsItems = data.filter((item) => item.category === 'Tools');
 
     return (
-        <Section>
-            <Title ref={ref} view={isInView}>
+        <Section
+            ref={(skillsRef) => {
+                if (ref && current && skillsRef) {
+                    current[2] = skillsRef;
+                }
+            }}
+        >
+            <Title ref={animationRef} view={isInView}>
                 SKILLS
             </Title>
             {isLoading && (
                 <Content>
-                    <SkillBox ref={ref} view={isInView}>
+                    <SkillBox ref={animationRef} view={isInView}>
                         <SkillName1>Front-End</SkillName1>
-                        <SkillContainer ref={ref} view={isInView}>
+                        <SkillContainer ref={animationRef} view={isInView}>
                             {frontendItems.map((a) => (
                                 <SkillContent key={a._id}>
                                     <ImgWrapper>
@@ -183,9 +191,9 @@ const Skills = () => {
                             ))}
                         </SkillContainer>
                     </SkillBox>
-                    <SkillBox ref={ref} view={isInView}>
+                    <SkillBox ref={animationRef} view={isInView}>
                         <SkillName1>Framework</SkillName1>
-                        <SkillContainer ref={ref} view={isInView}>
+                        <SkillContainer ref={animationRef} view={isInView}>
                             {frameworkItems.map((a, i) => (
                                 <SkillContent key={i}>
                                     <ImgWrapper>
@@ -202,9 +210,9 @@ const Skills = () => {
                             ))}
                         </SkillContainer>
                     </SkillBox>
-                    <SkillBox ref={ref} view={isInView}>
+                    <SkillBox ref={animationRef} view={isInView}>
                         <SkillName1>Library</SkillName1>
-                        <SkillContainer ref={ref} view={isInView}>
+                        <SkillContainer ref={animationRef} view={isInView}>
                             {libraryItems.map((a, i) => (
                                 <SkillContent key={i}>
                                     <ImgWrapper>
@@ -221,13 +229,13 @@ const Skills = () => {
                             ))}
                         </SkillContainer>
                     </SkillBox>
-                    <SkillBox ref={ref} view={isInView}>
+                    <SkillBox ref={animationRef} view={isInView}>
                         <SkillName1>Tools</SkillName1>
                         <SkillContainerFlat>
                             {toolsItems.map((a, i) => (
                                 <SkillContentFlat
                                     key={i}
-                                    ref={ref}
+                                    ref={animationRef}
                                     view={isInView}
                                 >
                                     <ImgWrapper>
@@ -247,6 +255,8 @@ const Skills = () => {
             )}
         </Section>
     );
-};
+});
+
+Skills.displayName = 'Skills';
 
 export default Skills;

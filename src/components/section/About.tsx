@@ -1,5 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
-import { useEffect, useState } from 'react';
+import { MutableRefObject, forwardRef, useEffect, useState } from 'react';
 import { getAbout } from '../../api';
 import { AxiosResponse } from 'axios';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
@@ -98,11 +98,13 @@ const Intro = styled.p`
     color: #fff;
 `;
 
-const About = () => {
+const About = forwardRef((_, ref) => {
     const [data, setData] = useState<Iabout[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const { ref, isInView } = useScrollAnimation();
+    const { animationRef, isInView } = useScrollAnimation();
+
+    const { current } = ref as MutableRefObject<HTMLElement[]>;
 
     useEffect(() => {
         fetchData();
@@ -120,9 +122,15 @@ const About = () => {
     };
 
     return (
-        <Section>
+        <Section
+            ref={(aboutRef) => {
+                if (ref && current && aboutRef) {
+                    current[0] = aboutRef;
+                }
+            }}
+        >
             <h1 className="a11yhidden">ABOUT</h1>
-            <NameBox ref={ref} view={isInView}>
+            <NameBox ref={animationRef} view={isInView}>
                 <Name>SOHEE YEO</Name>
             </NameBox>
             {isLoading ? (
@@ -130,7 +138,7 @@ const About = () => {
                     <IntroBtn>
                         <IntroTxt>Intro</IntroTxt>
                     </IntroBtn>
-                    <IntroContainer ref={ref} view={isInView}>
+                    <IntroContainer ref={animationRef} view={isInView}>
                         <Intro>{data[0].info}</Intro>
                     </IntroContainer>
                 </ContentsContainer>
@@ -139,6 +147,8 @@ const About = () => {
             )}
         </Section>
     );
-};
+});
+
+About.displayName = 'About';
 
 export default About;

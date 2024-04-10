@@ -142,7 +142,7 @@ const Project2 = ({ data }: IprojectProps) => {
 
     const stack = Object.values(data[1].stack).flat();
 
-    const { ref, isInView } = useScrollAnimation();
+    const { animationRef, isInView } = useScrollAnimation();
 
     const { cardRef, mouseRef, xy } = useMouseHandler();
 
@@ -155,7 +155,11 @@ const Project2 = ({ data }: IprojectProps) => {
     return (
         <>
             <div ref={cardRef}>
-                <Card ref={ref} view={isInView} onClick={handleOnClick}>
+                <Card
+                    ref={animationRef}
+                    view={isInView}
+                    onClick={handleOnClick}
+                >
                     <ContentContainer>
                         <ProjName>{proj.name}</ProjName>
                         <ProjDesc>

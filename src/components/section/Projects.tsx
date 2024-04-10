@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
+import { MutableRefObject, forwardRef, useEffect, useState } from 'react';
 import { getProjects } from '../../api';
 import { AxiosResponse } from 'axios';
 import Project1 from './Projects/Project1';
@@ -40,11 +40,13 @@ const Title = styled.h1<{ view: boolean }>`
         `};
 `;
 
-const Projects = () => {
+const Projects = forwardRef((_, ref) => {
     const [data, setData] = useState<Iprojects[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const { ref, isInView } = useScrollAnimation();
+    const { animationRef, isInView } = useScrollAnimation();
+
+    const { current } = ref as MutableRefObject<HTMLElement[]>;
 
     useEffect(() => {
         fetchData();
@@ -62,8 +64,14 @@ const Projects = () => {
     };
 
     return (
-        <Section>
-            <Title ref={ref} view={isInView}>
+        <Section
+            ref={(projectsRef) => {
+                if (ref && current && projectsRef) {
+                    current[1] = projectsRef;
+                }
+            }}
+        >
+            <Title ref={animationRef} view={isInView}>
                 PROJECTS
             </Title>
             {isLoading && (
@@ -76,6 +84,8 @@ const Projects = () => {
             )}
         </Section>
     );
-};
+});
+
+Projects.displayName = 'Projects';
 
 export default Projects;

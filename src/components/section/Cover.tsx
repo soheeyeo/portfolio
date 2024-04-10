@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect, RefObject } from 'react';
 import styled from 'styled-components';
+import { useRef, useState, useEffect, RefObject } from 'react';
 import Typing from '../../utils/typing';
 import Canvas from '../../utils/canvas';
 
