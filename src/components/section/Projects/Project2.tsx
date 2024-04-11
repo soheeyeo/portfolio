@@ -8,12 +8,12 @@ import useMouseHandler from '../../../hooks/useMouseHandler';
 const animation = keyframes`
     0%{
         opacity: 0;
-        transform: translate3d(100px, 0, 0);
+        transform: translate3d(-100px, 0, 0);
     }
 
     50%{
         opacity: 0;
-        transform: translate3d(50px, 0, 0);
+        transform: translate3d(-50px, 0, 0);
     }
 
     100%{
@@ -48,9 +48,9 @@ const Card = styled.div<{ view: boolean }>`
         height: 100%;
         background: rgba(62, 50, 79, 0.2);
         border-radius: 30px;
-        -webkit-transform-origin: right top;
-        -ms-transform-origin: right top;
-        transform-origin: right top;
+        -webkit-transform-origin: left top;
+        -ms-transform-origin: left top;
+        transform-origin: left top;
         -webkit-transform: scale(0, 1);
         -ms-transform: scale(0, 1);
         transform: scale(0, 1);
@@ -60,9 +60,9 @@ const Card = styled.div<{ view: boolean }>`
     }
 
     &:hover::before {
-        -webkit-transform-origin: right top;
-        -ms-transform-origin: right top;
-        transform-origin: right top;
+        -webkit-transform-origin: left top;
+        -ms-transform-origin: left top;
+        transform-origin: left top;
         -webkit-transform: scale(1, 1);
         -ms-transform: scale(1, 1);
         transform: scale(1, 1);
@@ -142,7 +142,11 @@ const Project2 = ({ data }: IprojectProps) => {
 
     const stack = Object.values(data[1].stack).flat();
 
-    const { animationRef, isInView } = useScrollAnimation();
+    const options = {
+        rootMargin: '-10% 0px',
+    };
+
+    const { animationRef, isInView } = useScrollAnimation(options);
 
     const { cardRef, mouseRef, xy } = useMouseHandler();
 

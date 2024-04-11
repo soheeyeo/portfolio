@@ -102,7 +102,11 @@ const About = forwardRef((_, ref) => {
     const [data, setData] = useState<Iabout[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const { animationRef, isInView } = useScrollAnimation();
+    const options = {
+        rootMargin: '-10% 0px',
+    };
+
+    const { animationRef, isInView } = useScrollAnimation(options);
 
     const { current } = ref as MutableRefObject<HTMLElement[]>;
 

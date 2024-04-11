@@ -92,7 +92,11 @@ const BlogIcon = styled(SiVelog)`
 `;
 
 const Contact = forwardRef((_, ref) => {
-    const { animationRef, isInView } = useScrollAnimation();
+    const options = {
+        rootMargin: '-10% 0px',
+    };
+
+    const { animationRef, isInView } = useScrollAnimation(options);
 
     const { current } = ref as MutableRefObject<HTMLElement[]>;
 

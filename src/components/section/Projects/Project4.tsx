@@ -1,5 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
-import cover from '../../../assets/cover/choco_d.jpg';
+import cover from '../../../assets/cover/port_d.jpg';
 import Modal from '../../modal/Modal';
 import { useState } from 'react';
 import useScrollAnimation from '../../../hooks/useScrollAnimation';
@@ -142,7 +142,11 @@ const Project4 = ({ data }: IprojectProps) => {
 
     const stack = Object.values(data[3].stack).flat();
 
-    const { animationRef, isInView } = useScrollAnimation();
+    const options = {
+        rootMargin: '-10% 0px',
+    };
+
+    const { animationRef, isInView } = useScrollAnimation(options);
 
     const { cardRef, mouseRef, xy } = useMouseHandler();
 
