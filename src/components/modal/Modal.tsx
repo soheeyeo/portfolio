@@ -1,10 +1,11 @@
 import styled, { keyframes, css } from 'styled-components';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import { FaLink } from 'react-icons/fa6';
 import { BsCheck } from 'react-icons/bs';
 import { PiDotBold } from 'react-icons/pi';
 import { HiMiniXMark } from 'react-icons/hi2';
+import uuid from 'react-uuid';
 
 const fadeIn = keyframes`
     0%{
@@ -26,14 +27,14 @@ const fadeOut = keyframes`
     }
 `;
 
-const modal = (isOpen: boolean) => css`
-    visibility: ${isOpen ? 'visible' : 'hidden'};
+const modal = (isopen: boolean) => css`
+    visibility: ${isopen ? 'visible' : 'hidden'};
     z-index: 1;
-    animation: ${isOpen ? fadeIn : fadeOut} 0.5s ease-out;
+    animation: ${isopen ? fadeIn : fadeOut} 0.5s ease-out;
     transition: all 0.5s ease-out;
 `;
 
-const ModalBg = styled.div<{ isOpen: boolean }>`
+const ModalBg = styled.div<{ $isopen: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,10 +44,10 @@ const ModalBg = styled.div<{ isOpen: boolean }>`
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4);
-    ${(props) => modal(props.isOpen)}
+    ${(props) => modal(props.$isopen)}
 `;
 
-const ModalContainer = styled.div<{ isOpen: boolean }>`
+const ModalContainer = styled.div<{ $isopen: boolean }>`
     position: absolute;
     padding: 60px;
     width: 80%;
@@ -55,7 +56,7 @@ const ModalContainer = styled.div<{ isOpen: boolean }>`
     border-radius: 5px;
     overflow: hidden;
     overflow-y: scroll;
-    ${(props) => modal(props.isOpen)}
+    ${(props) => modal(props.$isopen)}
 
     &::-webkit-scrollbar {
         width: 8px;
@@ -133,6 +134,19 @@ const LinkContainer = styled.div`
     margin-left: 10px;
 `;
 
+const LinkContainerVert = styled.div`
+    margin: 20px 0;
+`;
+
+const LinkVert = styled.a`
+    display: block;
+    margin-bottom: 10px;
+`;
+
+const LinkContent = styled.span`
+    margin-left: 5px;
+`;
+
 const Link = styled.a`
     margin-right: 8px;
     font-size: 18px;
@@ -176,6 +190,14 @@ const ContentTitle = styled.p`
     margin-bottom: 20px;
     font-size: 17px;
     font-weight: 600;
+`;
+
+const ProjPlan = styled.p`
+    margin: 30px 0 20px;
+    font-size: 15px;
+    line-height: 1.8;
+    word-break: keep-all;
+    white-space: pre-wrap;
 `;
 
 const CheckIcon = styled(BsCheck)`
@@ -232,12 +254,12 @@ const CloseIcon = styled(HiMiniXMark)`
     cursor: pointer;
 `;
 
-const Modal = ({ proj, setIsOpen, isOpen }: IprojProps) => {
+const Modal = ({ proj, setIsOpen, isopen }: IprojProps) => {
     const stack = Object.values(proj.stack);
     const lesson = proj.lesson ? Object.entries(proj.lesson) : '';
 
     const handleOnClick = () => {
-        setIsOpen(!isOpen);
+        setIsOpen(!isopen);
     };
 
     // 스크롤 방지
@@ -262,11 +284,11 @@ const Modal = ({ proj, setIsOpen, isOpen }: IprojProps) => {
     useEffect(() => {
         const prevScroll = preventScroll();
         allowScroll(prevScroll);
-    }, [isOpen]);
+    }, [isopen]);
 
     return (
-        <ModalBg isOpen={isOpen}>
-            <ModalContainer isOpen={isOpen}>
+        <ModalBg $isopen={isopen}>
+            <ModalContainer $isopen={isopen}>
                 <CloseIcon onClick={handleOnClick} />
                 <ModalContent>
                     <ImgContainer>
@@ -278,32 +300,60 @@ const Modal = ({ proj, setIsOpen, isOpen }: IprojProps) => {
                         <ProjType>{proj.type}</ProjType>
                         <ProjInfo>{proj.info}</ProjInfo>
                         <LinkTxt>Link</LinkTxt>
-                        <LinkContainer>
-                            <Link href={proj.link.url} target="_blank">
-                                <LinkIcon />
-                            </Link>
-                            <Link href={proj.link.github} target="_blank">
-                                <GitHubIcon />
-                            </Link>
-                        </LinkContainer>
                         {proj.link.accountId && proj.link.accountPw ? (
-                            <AccountContainer>
-                                <AccountTxt>테스트 계정</AccountTxt>
-                                <span>아이디</span>
-                                <AccountInfo>{proj.link.accountId}</AccountInfo>
-                                <span>패스워드</span>
-                                <AccountInfo>{proj.link.accountPw}</AccountInfo>
-                            </AccountContainer>
+                            <>
+                                <LinkContainer>
+                                    <Link href={proj.link.url} target="_blank">
+                                        <LinkIcon />
+                                    </Link>
+                                    <Link
+                                        href={proj.link.github}
+                                        target="_blank"
+                                    >
+                                        <GitHubIcon />
+                                    </Link>
+                                </LinkContainer>
+                                <AccountContainer>
+                                    <AccountTxt>테스트 계정</AccountTxt>
+                                    <span>아이디</span>
+                                    <AccountInfo>
+                                        {proj.link.accountId}
+                                    </AccountInfo>
+                                    <span>패스워드</span>
+                                    <AccountInfo>
+                                        {proj.link.accountPw}
+                                    </AccountInfo>
+                                </AccountContainer>
+                            </>
                         ) : (
-                            ''
+                            <LinkContainerVert>
+                                <LinkVert href={proj.link.url} target="_blank">
+                                    <LinkIcon />
+                                    <LinkContent>
+                                        배포 사이트 바로가기
+                                    </LinkContent>
+                                </LinkVert>
+                                <LinkVert
+                                    href={proj.link.github}
+                                    target="_blank"
+                                >
+                                    <GitHubIcon />
+                                    <LinkContent>깃헙 바로가기</LinkContent>
+                                </LinkVert>
+                            </LinkContainerVert>
                         )}
-
+                        {proj.plan && (
+                            <ContentBox>
+                                <ContentTitle>🐾 기획 배경</ContentTitle>
+                                <ProjPlan>{proj.plan}</ProjPlan>
+                            </ContentBox>
+                        )}
                         <ContentBox>
                             <ContentTitle>📌 프로젝트 목표</ContentTitle>
                             <ul>
-                                {proj.goals.map((a, i) => {
+                                {proj.goals.map((a) => {
                                     return (
-                                        <LiItem key={i}>
+                                        <LiItem key={uuid()}>
                                             <CheckIcon />
                                             {a}
                                         </LiItem>
@@ -316,20 +366,20 @@ const Modal = ({ proj, setIsOpen, isOpen }: IprojProps) => {
                             <StackContainer>
                                 <StackType>Front-End</StackType>
                                 <StackLi>
-                                    {stack[0].map((a: string, i: number) => {
-                                        return <Stack key={i}>{a}</Stack>;
+                                    {stack[0].map((a: string) => {
+                                        return <Stack key={uuid()}>{a}</Stack>;
                                     })}
                                 </StackLi>
                                 <StackType>Back-End</StackType>
                                 <StackLi>
-                                    {stack[1].map((a: string, i: number) => {
-                                        return <Stack key={i}>{a}</Stack>;
+                                    {stack[1].map((a: string) => {
+                                        return <Stack key={uuid()}>{a}</Stack>;
                                     })}
                                 </StackLi>
                                 <StackType>Etc</StackType>
                                 <StackLi>
-                                    {stack[2].map((a: string, i: number) => {
-                                        return <Stack key={i}>{a}</Stack>;
+                                    {stack[2].map((a: string) => {
+                                        return <Stack key={uuid()}>{a}</Stack>;
                                     })}
                                 </StackLi>
                             </StackContainer>
@@ -337,9 +387,9 @@ const Modal = ({ proj, setIsOpen, isOpen }: IprojProps) => {
                         <ContentBox>
                             <ContentTitle>💻 담당 기능</ContentTitle>
                             <ul>
-                                {proj.role.map((a, i) => {
+                                {proj.role.map((a) => {
                                     return (
-                                        <LiItem key={i}>
+                                        <LiItem key={uuid()}>
                                             <LiIcon />
                                             {a}
                                         </LiItem>
@@ -353,14 +403,10 @@ const Modal = ({ proj, setIsOpen, isOpen }: IprojProps) => {
                                 <div>
                                     {lesson.map((a, i) => {
                                         return (
-                                            <>
-                                                <LessonTit key={i}>
-                                                    {a[0]}
-                                                </LessonTit>
-                                                <Lesson key={i.toString()}>
-                                                    {a[1]}
-                                                </Lesson>
-                                            </>
+                                            <React.Fragment key={i}>
+                                                <LessonTit>{a[0]}</LessonTit>
+                                                <Lesson>{a[1]}</Lesson>
+                                            </React.Fragment>
                                         );
                                     })}
                                 </div>
