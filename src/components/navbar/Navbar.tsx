@@ -1,25 +1,7 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
-import styled, { css, keyframes } from 'styled-components';
-import useScrollAnimation from '../../hooks/useScrollAnimation';
+import styled from 'styled-components';
 
-const navAnimation = keyframes`
-    0%{
-        opacity: 0;
-        transform: translate3d(0, -30px, 0);
-    }
-
-    60%{
-        opacity: 0;
-        transform: translate3d(0, -30px, 0);
-    }
-
-    100%{
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-`;
-
-const Nav = styled.nav<{ $view: boolean }>`
+const Nav = styled.nav`
     display: flex;
     position: sticky;
     padding: 20px 10%;
@@ -30,12 +12,6 @@ const Nav = styled.nav<{ $view: boolean }>`
     top: 0;
     left: 0;
     right: 0;
-    opacity: ${(props) => (props.$view ? 1 : 0)};
-    animation: ${(props) =>
-        props.$view &&
-        css`
-            ${navAnimation} 0.5s ease-in-out
-        `};
     z-index: 1;
 `;
 
@@ -53,7 +29,6 @@ const Navbar = ({ navRef }: INavProps) => {
     const [navIdx, setNavIdx] = useState<number | null>(null);
     const linkRef = useRef<HTMLDivElement[] | null[]>([]);
 
-    const { animationRef, isInView } = useScrollAnimation();
     useEffect(() => {
         if (navIdx !== null && navRef.current[navIdx]) {
             navRef.current[navIdx].scrollIntoView({ behavior: 'smooth' });
@@ -63,7 +38,7 @@ const Navbar = ({ navRef }: INavProps) => {
 
     return (
         <>
-            <Nav ref={animationRef} $view={isInView}>
+            <Nav>
                 <PageLink
                     ref={(ref) => (linkRef.current[0] = ref)}
                     onClick={() => {
