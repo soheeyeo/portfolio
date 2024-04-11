@@ -43,6 +43,7 @@ const Canvas = ({ width, height }: sizePropsType) => {
         }
 
         update() {
+            // isInside가 true일 때 원이 커지면서 이동, false일 때 반대로 튕기면서 움직임 느려지도록
             if (isInside(this.x, this.y)) {
                 this.x += this.vx;
                 this.y += this.vy;
@@ -68,6 +69,7 @@ const Canvas = ({ width, height }: sizePropsType) => {
     const circles: Circle[] = [];
 
     const moveCircle = () => {
+        // cirlcles의 길이가 15보다 작을 때 circle 생성
         const fin = 15 - circles.length;
         for (let i = 0; i < fin && i < 15; i++) {
             const circle = new Circle();
@@ -94,6 +96,7 @@ const Canvas = ({ width, height }: sizePropsType) => {
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext('2d');
 
+        // 캔버스 크기, 픽셀 설정
         const setCanvas = () => {
             const devicePixelRatio = window.devicePixelRatio ?? 1;
 

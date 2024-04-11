@@ -4,6 +4,7 @@ interface Iabout {
 }
 
 interface Iprojects {
+    _id: string;
     name: string;
     intro: string;
     type: string;
@@ -36,7 +37,7 @@ interface Ilink {
 interface IprojProps {
     proj: Iprojects;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    isOpen: boolean;
+    isopen: boolean;
 }
 
 interface IprojectProps {

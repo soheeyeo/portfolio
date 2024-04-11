@@ -188,7 +188,7 @@ const Project4 = ({ data }: IprojectProps) => {
                 </Card>
             </div>
 
-            <Modal proj={proj} setIsOpen={setIsOpen} isOpen={isOpen} />
+            <Modal proj={proj} setIsOpen={setIsOpen} isopen={isOpen} />
         </>
     );
 };

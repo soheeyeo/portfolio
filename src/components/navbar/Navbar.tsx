@@ -19,7 +19,7 @@ const navAnimation = keyframes`
     }
 `;
 
-const Nav = styled.nav<{ view: boolean }>`
+const Nav = styled.nav<{ $view: boolean }>`
     display: flex;
     position: sticky;
     padding: 20px 10%;
@@ -30,9 +30,9 @@ const Nav = styled.nav<{ view: boolean }>`
     top: 0;
     left: 0;
     right: 0;
-    opacity: ${(props) => (props.view ? 1 : 0)};
+    opacity: ${(props) => (props.$view ? 1 : 0)};
     animation: ${(props) =>
-        props.view &&
+        props.$view &&
         css`
             ${navAnimation} 0.5s ease-in-out
         `};
@@ -63,7 +63,7 @@ const Navbar = ({ navRef }: INavProps) => {
 
     return (
         <>
-            <Nav ref={animationRef} view={isInView}>
+            <Nav ref={animationRef} $view={isInView}>
                 <PageLink
                     ref={(ref) => (linkRef.current[0] = ref)}
                     onClick={() => {
