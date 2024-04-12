@@ -14,13 +14,34 @@ const cursor = keyframes`
 const Txt = styled.h1`
     display: inline-block;
     position: absolute;
+    width: 100%;
     top: 50%;
     left: 50%;
     font-family: 'DM Serif Display', serif;
-    font-size: 95px;
+    font-size: 94px;
     text-align: center;
     white-space: pre-wrap;
     transform: translate(-50%, -50%);
+
+    @media screen and (max-width: 1200px) {
+        font-size: 5.625rem;
+    }
+
+    @media screen and (max-width: 992px) {
+        font-size: 5rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        font-size: 3.375rem;
+    }
+
+    @media screen and (max-width: 480px) {
+        font-size: 3rem;
+    }
+
+    @media screen and (max-width: 320px) {
+        font-size: 3rem;
+    }
 `;
 
 const Cursor = styled.div`
@@ -28,9 +49,29 @@ const Cursor = styled.div`
     margin-left: 5px;
     vertical-align: top;
     width: 2px;
-    height: 96px;
+    height: 94px;
     background-color: #fff;
     animation: ${cursor} 1s step-end infinite;
+
+    @media screen and (max-width: 1200px) {
+        height: 5.625rem;
+    }
+
+    @media screen and (max-width: 992px) {
+        height: 5rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        height: 3.375rem;
+    }
+
+    @media screen and (max-width: 480px) {
+        height: 3rem;
+    }
+
+    @media screen and (max-width: 320px) {
+        height: 3rem;
+    }
 `;
 
 const Typing = () => {
