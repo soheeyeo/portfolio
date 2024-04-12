@@ -13,12 +13,25 @@ const Nav = styled.nav`
     left: 0;
     right: 0;
     z-index: 1;
+
+    @media screen and (max-width: 768px) {
+        padding: 20px 8%;
+    }
+
+    @media screen and (max-width: 480px) {
+        padding: 20px 5%;
+        gap: 24px;
+    }
 `;
 
 const PageLink = styled.div`
     font-family: ${(props) => props.theme.contentFont};
     font-size: 20px;
     cursor: pointer;
+
+    @media screen and (max-width: 768px) {
+        font-size: 1rem;
+    }
 `;
 
 interface INavProps {
