@@ -34,16 +34,56 @@ const NameBox = styled.div<{ view: boolean }>`
         css`
             ${animation} 1s ease-in-out
         `};
+
+    @media screen and (max-width: 768px) {
+        padding: 0 0 80px;
+    }
+
+    @media screen and (max-width: 480px) {
+        padding: 0 0 50px;
+    }
 `;
 
 const Name = styled.p`
     font-size: 64px;
+
+    @media screen and (max-width: 1200px) {
+        font-size: 3.75rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        font-size: 3.5rem;
+    }
+
+    @media screen and (max-width: 480px) {
+        font-size: 3.25rem;
+        text-align: center;
+    }
 `;
 
 const ContentsContainer = styled.div`
     display: flex;
     padding-left: 100px;
-    gap: 140px;
+    justify-content: space-between;
+    align-items: center;
+
+    @media screen and (max-width: 1200px) {
+        padding-left: 60px;
+    }
+
+    @media screen and (max-width: 992px) {
+        padding-left: 30px;
+    }
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        padding-left: 0px;
+        gap: 50px;
+    }
+
+    @media screen and (max-width: 480px) {
+        gap: 30px;
+    }
 `;
 
 const IntroBtn = styled.div`
@@ -54,12 +94,31 @@ const IntroBtn = styled.div`
     height: 160px;
     border: 0.5px solid #cac3e1;
     border-radius: 50%;
+
+    @media screen and (max-width: 1200px) {
+        width: 140px;
+        height: 140px;
+    }
+
+    @media screen and (max-width: 768px) {
+        width: 120px;
+        height: 120px;
+    }
+
+    @media screen and (max-width: 480px) {
+        width: 105px;
+        height: 105px;
+    }
 `;
 
 const IntroTxt = styled.span`
     font-family: ${(props) => props.theme.contentFont};
     font-size: 20px;
     color: #cac3e1;
+
+    @media screen and (max-width: 768px) {
+        font-size: 1rem;
+    }
 `;
 
 const introAnimation = keyframes`
@@ -87,6 +146,10 @@ const IntroContainer = styled.div<{ view: boolean }>`
         css`
             ${introAnimation} 1s ease-in-out
         `};
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
 `;
 
 const Intro = styled.p`
@@ -96,6 +159,27 @@ const Intro = styled.p`
     word-break: keep-all;
     white-space: pre-wrap;
     color: #fff;
+
+    @media screen and (max-width: 1200px) {
+        font-size: 16px;
+        text-align: center;
+    }
+    /* 
+    @media screen and (max-width: 992px) {
+        height: 5rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        height: 3.375rem;
+    }
+
+    @media screen and (max-width: 480px) {
+        height: 3rem;
+    }
+
+    @media screen and (max-width: 320px) {
+        height: 3rem;
+    } */
 `;
 
 const About = forwardRef((_, ref) => {
