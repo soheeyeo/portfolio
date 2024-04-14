@@ -5,7 +5,8 @@ import { AxiosResponse } from 'axios';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
 
 const Section = styled.section`
-    margin: 60px auto;
+    margin: 60px auto 0;
+
     width: 80%;
 `;
 
@@ -33,41 +34,21 @@ const Title = styled.h1<{ view: boolean }>`
         css`
             ${animation} 1s ease-in-out
         `};
-`;
 
-const Content = styled.div`
-    display: grid;
-    gap: 60px;
-    grid-template-columns: repeat(2, 1fr);
-`;
-
-const nameAnimation = keyframes`
-    0%{
-        opacity: 0;
-        transform: translate3d(-30px, 0, 0);
+    @media screen and (max-width: 1200px) {
+        padding-bottom: 60px;
+        font-size: 3.75rem;
     }
 
-    100%{
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
+    @media screen and (max-width: 768px) {
+        font-size: 3.5rem;
     }
-`;
 
-const SkillBox = styled.div<{ view: boolean }>`
-    font-family: ${(props) => props.theme.contentFont};
-    opacity: ${(props) => (props.view ? 1 : 0)};
-    animation: ${(props) =>
-        props.view &&
-        css`
-            ${nameAnimation} 1s ease-in-out
-        `};
-`;
-
-const SkillName1 = styled.p`
-    padding-bottom: 8px;
-    font-size: 20px;
-    font-weight: 500;
-    border-bottom: 1px solid #fff;
+    @media screen and (max-width: 480px) {
+        padding-bottom: 50px;
+        font-size: 3.25rem;
+        text-align: center;
+    }
 `;
 
 const contentAnimation = keyframes`
@@ -87,14 +68,39 @@ const contentAnimation = keyframes`
     }
 `;
 
-const SkillContainer = styled.div<{ view: boolean }>`
+const Content = styled.div<{ view: boolean }>`
+    display: grid;
+    gap: 60px;
+    grid-template-columns: repeat(2, 1fr);
+
     opacity: ${(props) => (props.view ? 1 : 0)};
     animation: ${(props) =>
         props.view &&
         css`
             ${contentAnimation} 1s ease-in-out
         `};
+
+    @media screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+    }
+
+    @media screen and (max-width: 480px) {
+    }
 `;
+
+const SkillBox = styled.div`
+    font-family: ${(props) => props.theme.contentFont};
+`;
+
+const SkillName1 = styled.p`
+    padding-bottom: 8px;
+    font-size: 20px;
+    font-weight: 500;
+    border-bottom: 1px solid #fff;
+`;
+
+const SkillContainer = styled.div``;
 
 const SkillContainerFlat = styled.div`
     display: flex;
@@ -109,14 +115,7 @@ const SkillContent = styled.div`
     margin-top: 20px;
 `;
 
-const SkillContentFlat = styled.div<{ view: boolean }>`
-    opacity: ${(props) => (props.view ? 1 : 0)};
-    animation: ${(props) =>
-        props.view &&
-        css`
-            ${contentAnimation} 1s ease-in-out
-        `};
-`;
+const SkillContentFlat = styled.div``;
 
 const ImgWrapper = styled.div`
     width: 50px;
@@ -126,7 +125,12 @@ const Img = styled.img`
     width: 100%;
 `;
 
-const SkillDesc = styled.span``;
+const SkillDesc = styled.span`
+    width: 80%;
+    word-break: keep-all;
+    white-space: pre-wrap;
+    line-height: 1.5;
+`;
 
 const Skills = forwardRef((_, ref) => {
     const [data, setData] = useState<Iskills[]>([]);
@@ -175,10 +179,10 @@ const Skills = forwardRef((_, ref) => {
                 SKILLS
             </Title>
             {isLoading && (
-                <Content>
-                    <SkillBox ref={animationRef} view={isInView}>
+                <Content ref={animationRef} view={isInView}>
+                    <SkillBox>
                         <SkillName1>Front-End</SkillName1>
-                        <SkillContainer ref={animationRef} view={isInView}>
+                        <SkillContainer>
                             {frontendItems.map((a) => (
                                 <SkillContent key={a._id}>
                                     <ImgWrapper>
@@ -195,9 +199,9 @@ const Skills = forwardRef((_, ref) => {
                             ))}
                         </SkillContainer>
                     </SkillBox>
-                    <SkillBox ref={animationRef} view={isInView}>
+                    <SkillBox>
                         <SkillName1>Framework</SkillName1>
-                        <SkillContainer ref={animationRef} view={isInView}>
+                        <SkillContainer>
                             {frameworkItems.map((a, i) => (
                                 <SkillContent key={i}>
                                     <ImgWrapper>
@@ -214,9 +218,9 @@ const Skills = forwardRef((_, ref) => {
                             ))}
                         </SkillContainer>
                     </SkillBox>
-                    <SkillBox ref={animationRef} view={isInView}>
+                    <SkillBox>
                         <SkillName1>Library</SkillName1>
-                        <SkillContainer ref={animationRef} view={isInView}>
+                        <SkillContainer>
                             {libraryItems.map((a, i) => (
                                 <SkillContent key={i}>
                                     <ImgWrapper>
@@ -233,15 +237,11 @@ const Skills = forwardRef((_, ref) => {
                             ))}
                         </SkillContainer>
                     </SkillBox>
-                    <SkillBox ref={animationRef} view={isInView}>
+                    <SkillBox>
                         <SkillName1>Tools</SkillName1>
                         <SkillContainerFlat>
                             {toolsItems.map((a, i) => (
-                                <SkillContentFlat
-                                    key={i}
-                                    ref={animationRef}
-                                    view={isInView}
-                                >
+                                <SkillContentFlat key={i}>
                                     <ImgWrapper>
                                         <Img
                                             src={require(
