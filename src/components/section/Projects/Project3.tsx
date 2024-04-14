@@ -27,9 +27,8 @@ const Card = styled.div<{ view: boolean }>`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 40px;
+    padding: 80px 40px;
     margin-bottom: 200px;
-    height: 70vh;
     transition: all 0.75s ease 0s;
     opacity: ${(props) => (props.view ? 1 : 0)};
     animation: ${(props) =>
@@ -74,36 +73,101 @@ const Card = styled.div<{ view: boolean }>`
         transition: all 0.75s ease 0s;
         transition-delay: 0.5s;
     }
+
+    @media screen and (max-width: 1200px) {
+        padding: 40px;
+    }
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column-reverse;
+    }
+
+    @media screen and (max-width: 480px) {
+        font-size: 2.25rem;
+        text-align: center;
+    }
 `;
 
 const ProjName = styled.h3`
     font-family: ${(props) => props.theme.contentFont};
     font-size: 48px;
     font-weight: 500;
+
+    @media screen and (max-width: 1200px) {
+        font-size: 2.75rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        font-size: 2.5rem;
+    }
+
+    @media screen and (max-width: 480px) {
+        font-size: 2.25rem;
+        text-align: center;
+    }
 `;
 
 const ContentContainer = styled.div`
     display: flex;
     flex-direction: column;
+    word-break: keep-all;
+    white-space: pre-wrap;
+
+    @media screen and (max-width: 1200px) {
+        width: 50%;
+    }
+
+    @media screen and (max-width: 768px) {
+        margin-top: 40px;
+        width: 100%;
+        text-align: center;
+    }
 `;
 
 const ProjDesc = styled.div`
     margin-top: 80px;
     font-family: ${(props) => props.theme.contentFont};
+
+    @media screen and (max-width: 768px) {
+        margin-top: 40px;
+    }
 `;
 
 const ProjContent = styled.p`
     margin-bottom: 40px;
     font-size: 20px;
+
+    @media screen and (max-width: 1200px) {
+        font-size: 1rem;
+        line-height: 2;
+    }
+
+    @media screen and (max-width: 768px) {
+        margin-bottom: 30px;
+    }
 `;
 
 const ProjType = styled.p`
     margin-bottom: 40px;
     font-size: 16px;
+
+    @media screen and (max-width: 1200px) {
+        font-size: 0.875rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        margin-bottom: 30px;
+    }
 `;
 
 const ProjTechContainer = styled.ul`
     display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    @media screen and (max-width: 768px) {
+        justify-content: center;
+    }
 `;
 
 const ProjTechLi = styled.li``;
@@ -112,10 +176,22 @@ const ProjTech = styled.span`
     margin-right: 20px;
     font-weight: 600;
     font-size: 18px;
+
+    @media screen and (max-width: 1200px) {
+        font-size: 1rem;
+    }
 `;
 
 const ImgWrapper = styled.div`
     width: 45%;
+
+    @media screen and (max-width: 1200px) {
+        width: 40%;
+    }
+
+    @media screen and (max-width: 480px) {
+        width: 100%;
+    }
 `;
 
 const Img = styled.img`
@@ -191,7 +267,9 @@ const Project3 = ({ data }: IprojectProps) => {
                     </Cursor>
                 </Card>
             </div>
-            <Modal proj={proj} setIsOpen={setIsOpen} isopen={isOpen} />
+            {isOpen && (
+                <Modal proj={proj} setIsOpen={setIsOpen} isopen={isOpen} />
+            )}
         </>
     );
 };
