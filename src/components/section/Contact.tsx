@@ -36,6 +36,21 @@ const Title = styled.h1<{ view: boolean }>`
         css`
             ${animation} 1s ease-in-out
         `};
+
+    @media screen and (max-width: 1200px) {
+        font-size: 3.75rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        padding-bottom: 80px;
+        font-size: 3.5rem;
+    }
+
+    @media screen and (max-width: 480px) {
+        padding-bottom: 50px;
+        font-size: 3.25rem;
+        text-align: center;
+    }
 `;
 
 const introAnimation = keyframes`
@@ -70,6 +85,20 @@ const IconContainer = styled.div<{ view: boolean }>`
         css`
             ${introAnimation} 1s ease-in-out
         `};
+
+    @media screen and (max-width: 1200px) {
+        padding: 0 10%;
+    }
+
+    @media screen and (max-width: 768px) {
+        padding: 0;
+        font-size: 1.125rem;
+    }
+
+    @media screen and (max-width: 480px) {
+        flex-direction: column;
+        gap: 40px;
+    }
 `;
 
 const EmailIcon = styled(LuMail)`
