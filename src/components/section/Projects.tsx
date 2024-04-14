@@ -38,6 +38,21 @@ const Title = styled.h1<{ view: boolean }>`
         css`
             ${animation} 1s ease-in-out
         `};
+
+    @media screen and (max-width: 1200px) {
+        padding: 80px 0 60px;
+        font-size: 3.75rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        padding-bottom: 40px;
+        font-size: 3.5rem;
+    }
+
+    @media screen and (max-width: 480px) {
+        font-size: 3.25rem;
+        text-align: center;
+    }
 `;
 
 const Projects = forwardRef((_, ref) => {

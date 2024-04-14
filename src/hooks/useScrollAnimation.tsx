@@ -32,7 +32,6 @@ const useScrollAnimation = (options: IScrollOptions) => {
             observer.disconnect();
         };
     }, [options]);
-    console.log(options);
 
     return {
         isInView: isInView,

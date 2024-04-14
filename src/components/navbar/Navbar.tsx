@@ -32,6 +32,10 @@ const PageLink = styled.div`
     @media screen and (max-width: 768px) {
         font-size: 1rem;
     }
+
+    @media screen and (max-width: 480px) {
+        font-size: 0.875rem;
+    }
 `;
 
 interface INavProps {

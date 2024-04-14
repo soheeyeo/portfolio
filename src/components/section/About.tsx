@@ -8,6 +8,10 @@ const Section = styled.section`
     margin: 60px auto 0;
     width: 80%;
     height: calc(100vh - 60px);
+
+    @media screen and (max-width: 480px) {
+        height: 100%;
+    }
 `;
 
 const animation = keyframes`
@@ -164,22 +168,6 @@ const Intro = styled.p`
         font-size: 16px;
         text-align: center;
     }
-    /* 
-    @media screen and (max-width: 992px) {
-        height: 5rem;
-    }
-
-    @media screen and (max-width: 768px) {
-        height: 3.375rem;
-    }
-
-    @media screen and (max-width: 480px) {
-        height: 3rem;
-    }
-
-    @media screen and (max-width: 320px) {
-        height: 3rem;
-    } */
 `;
 
 const About = forwardRef((_, ref) => {
