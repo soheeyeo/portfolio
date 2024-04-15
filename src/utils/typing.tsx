@@ -127,9 +127,18 @@ const Typing = () => {
             if (lastTimeStamp.current === null)
                 lastTimeStamp.current = timeStamp;
 
-            // 경과 시간 100ms 이후 다음 글자 표시
+            // 2500ms 이후 첫 글자 표시, 경과 시간 100ms 이후 다음 글자 표시
             const elapsed = timeStamp - lastTimeStamp.current;
-            if (elapsed > 100) {
+
+            if (letter.length == 0 && elapsed > 2500) {
+                const currentLetter = text[index];
+                setLetter((prev) => {
+                    const result = (prev += currentLetter);
+                    return result;
+                });
+                setIndex((prev) => prev + 1);
+            }
+            if (letter.length > 0 && elapsed > 100) {
                 lastTimeStamp.current = timeStamp;
                 if (text.length > index) {
                     const currentLetter = text[index];
