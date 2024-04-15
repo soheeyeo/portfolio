@@ -1,5 +1,4 @@
 import styled, { keyframes, css } from 'styled-components';
-import cover from '../../../assets/cover/port_d.jpg';
 import Modal from '../../modal/Modal';
 import { useState } from 'react';
 import useScrollAnimation from '../../../hooks/useScrollAnimation';
@@ -211,6 +210,11 @@ const Cursor = styled.div`
     color: #fff;
     border-radius: 50%;
     pointer-events: none;
+
+    @media screen and (max-width: 480px) {
+        width: 60px;
+        height: 60px;
+    }
 `;
 
 const Project4 = ({ data }: IprojectProps) => {
@@ -257,7 +261,11 @@ const Project4 = ({ data }: IprojectProps) => {
                         </ProjDesc>
                     </ContentContainer>
                     <ImgWrapper>
-                        <Img src={cover} />
+                        <Img
+                            src={require(
+                                '../../../assets/cover/' + proj.src[0] + '.jpg',
+                            )}
+                        />
                     </ImgWrapper>
                     <Cursor
                         ref={mouseRef}

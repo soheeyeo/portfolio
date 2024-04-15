@@ -68,39 +68,79 @@ const ModalContainer = styled.div<{ $isopen: boolean }>`
         background: rgba(123, 90, 201, 0.3);
         border-radius: 6px;
     }
+
+    @media screen and (max-width: 768px) {
+        padding: 10%;
+    }
 `;
 
 const ModalContent = styled.div`
     display: flex;
-    gap: 60px;
+    justify-content: space-between;
+    word-break: keep-all;
+    white-space: pre-wrap;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
 `;
 
 const ImgContainer = styled.div`
     display: flex;
     position: sticky;
     gap: 30px;
+    width: 45%;
     height: 100%;
     top: 25%;
+
+    @media screen and (max-width: 768px) {
+        position: static;
+        width: 100%;
+    }
+
+    @media screen and (max-width: 480px) {
+        gap: 20px;
+    }
 `;
 
 const ImgWrapperB = styled.div`
     width: 400px;
     height: 250px;
-    background-color: #d4cae5;
     border-radius: 5px;
+
+    @media screen and (max-width: 768px) {
+        width: 70%;
+        height: 100%;
+    }
 `;
 
 const ImgWrapperS = styled.div`
     width: 120px;
     height: 250px;
-    background-color: #d4cae5;
+    border-radius: 5px;
+
+    @media screen and (max-width: 768px) {
+        width: 25%;
+        height: 100%;
+    }
+`;
+
+const Img = styled.img`
+    width: 100%;
     border-radius: 5px;
 `;
 
 const ContentContainer = styled.div`
+    width: 50%;
     font-family: ${(props) => props.theme.contentFont};
     font-size: 15px;
     color: #000;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
 `;
 
 const ProjName = styled.h3`
@@ -113,6 +153,10 @@ const ProjType = styled.span`
     display: inline;
     margin-left: 10px;
     font-size: 14px;
+
+    @media screen and (max-width: 480px) {
+        font-size: 0.75rem;
+    }
 `;
 
 const ProjInfo = styled.p`
@@ -121,6 +165,10 @@ const ProjInfo = styled.p`
     line-height: 1.8;
     word-break: keep-all;
     white-space: pre-wrap;
+
+    @media screen and (max-width: 992px) {
+        font-size: 0.875rem;
+    }
 `;
 
 const LinkTxt = styled.span`
@@ -171,6 +219,15 @@ const AccountContainer = styled.div`
     font-size: 13px;
     background-color: rgba(123, 90, 201, 0.2);
     border-radius: 5px;
+
+    @media screen and (max-width: 1200px) {
+        width: 70%;
+    }
+
+    @media screen and (max-width: 480px) {
+        grid-template-columns: 1fr 2fr;
+        width: 100%;
+    }
 `;
 
 const AccountTxt = styled.span`
@@ -193,11 +250,13 @@ const ContentTitle = styled.p`
 `;
 
 const ProjPlan = styled.p`
-    margin: 30px 0 20px;
+    margin-bottom: 20px;
     font-size: 15px;
     line-height: 1.8;
-    word-break: keep-all;
-    white-space: pre-wrap;
+
+    @media screen and (max-width: 992px) {
+        font-size: 0.875rem;
+    }
 `;
 
 const CheckIcon = styled(BsCheck)`
@@ -207,13 +266,22 @@ const CheckIcon = styled(BsCheck)`
 `;
 
 const LiItem = styled.li`
-    margin-bottom: 10px;
-    line-height: 1.2;
+    margin-bottom: 8px;
+    line-height: 1.6;
+
+    @media screen and (max-width: 992px) {
+        font-size: 0.875rem;
+    }
 `;
 
 const StackContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 4fr;
+
+    @media screen and (max-width: 992px) {
+        gap: 10px;
+        font-size: 0.875rem;
+    }
 `;
 
 const StackType = styled.span`
@@ -226,7 +294,9 @@ const StackLi = styled.div`
 `;
 
 const Stack = styled.span`
+    display: inline-block;
     margin-right: 15px;
+    white-space: nowrap;
 `;
 
 const LiIcon = styled(PiDotBold)`
@@ -240,18 +310,28 @@ const LessonTit = styled.p`
 
 const Lesson = styled.p`
     margin-bottom: 20px;
-    line-height: 1.5;
-    word-break: keep-all;
-    white-space: pre-wrap;
+    line-height: 1.8;
+
+    @media screen and (max-width: 992px) {
+        font-size: 0.875rem;
+    }
 `;
 
 const CloseIcon = styled(HiMiniXMark)`
     position: fixed;
-    top: 96px;
-    right: 190px;
+    top: 12%;
+    right: 12%;
     font-size: 24px;
     color: #000;
     cursor: pointer;
+
+    @media screen and (max-width: 1200px) {
+        font-size: 1.25rem;
+    }
+
+    @media screen and (max-width: 480px) {
+        right: 14%;
+    }
 `;
 
 const Modal = ({ proj, setIsOpen, isopen }: IprojProps) => {
@@ -282,8 +362,10 @@ const Modal = ({ proj, setIsOpen, isopen }: IprojProps) => {
     };
 
     useEffect(() => {
-        const prevScroll = preventScroll();
-        allowScroll(prevScroll);
+        if (isopen) {
+            const prevScroll = preventScroll();
+            return () => allowScroll(prevScroll);
+        }
     }, [isopen]);
 
     return (
@@ -292,8 +374,38 @@ const Modal = ({ proj, setIsOpen, isopen }: IprojProps) => {
                 <CloseIcon onClick={handleOnClick} />
                 <ModalContent>
                     <ImgContainer>
-                        <ImgWrapperB></ImgWrapperB>
-                        <ImgWrapperS></ImgWrapperS>
+                        {proj.name === 'Co Market' ? (
+                            <ImgWrapperB>
+                                <Img
+                                    src={require(
+                                        '../../assets/cover/' +
+                                            proj.src[1] +
+                                            '.jpg',
+                                    )}
+                                />
+                            </ImgWrapperB>
+                        ) : (
+                            <>
+                                <ImgWrapperB>
+                                    <Img
+                                        src={require(
+                                            '../../assets/cover/' +
+                                                proj.src[0] +
+                                                '.jpg',
+                                        )}
+                                    />
+                                </ImgWrapperB>
+                                <ImgWrapperS>
+                                    <Img
+                                        src={require(
+                                            '../../assets/cover/' +
+                                                proj.src[1] +
+                                                '.jpg',
+                                        )}
+                                    />
+                                </ImgWrapperS>
+                            </>
+                        )}
                     </ImgContainer>
                     <ContentContainer>
                         <ProjName>{proj.name}</ProjName>
