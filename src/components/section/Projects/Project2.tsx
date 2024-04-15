@@ -269,7 +269,11 @@ const Project2 = ({ data }: IprojectProps) => {
                     </ImgWrapper>
                     <Cursor
                         ref={mouseRef}
-                        style={{ left: `${xy.x}px`, top: `${xy.y}px` }}
+                        style={{
+                            left: `${xy.x}px`,
+                            top: `${xy.y}px`,
+                            opacity: xy.x && xy.y ? 1 : 0,
+                        }}
                     >
                         Learn More
                     </Cursor>
