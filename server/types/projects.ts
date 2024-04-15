@@ -10,4 +10,5 @@ export interface Iprojects {
     features: [string];
     role: [string];
     lesson: object;
+    src: [string];
 }

@@ -32,7 +32,6 @@ const projectsSchema: Schema = new Schema({
     },
     plan: {
         type: String,
-        required: true,
     },
     features: {
         type: [String],
@@ -43,6 +42,9 @@ const projectsSchema: Schema = new Schema({
     },
     lesson: {
         type: Object,
+    },
+    src: {
+        type: [String],
         required: true,
     },
 });
