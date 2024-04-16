@@ -21,7 +21,7 @@ const animation = keyframes`
     }
 `;
 
-const Card = styled.div<{ view: boolean }>`
+const Card = styled.div<{ $view: boolean }>`
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -29,9 +29,9 @@ const Card = styled.div<{ view: boolean }>`
     padding: 80px 40px;
     margin-bottom: 200px;
     transition: all 0.75s ease 0s;
-    opacity: ${(props) => (props.view ? 1 : 0)};
+    opacity: ${(props) => (props.$view ? 1 : 0)};
     animation: ${(props) =>
-        props.view &&
+        props.$view &&
         css`
             ${animation} 1s
         `};
@@ -169,8 +169,6 @@ const ProjTechContainer = styled.ul`
     }
 `;
 
-const ProjTechLi = styled.li``;
-
 const ProjTech = styled.span`
     margin-right: 20px;
     font-weight: 600;
@@ -241,7 +239,7 @@ const Project1 = ({ data }: IprojectProps) => {
             <div ref={cardRef}>
                 <Card
                     ref={animationRef}
-                    view={isInView}
+                    $view={isInView}
                     onClick={handleOnClick}
                 >
                     <ContentContainer>
@@ -252,9 +250,9 @@ const Project1 = ({ data }: IprojectProps) => {
                             <ProjTechContainer>
                                 {stack.map((a, i) => {
                                     return (
-                                        <ProjTechLi key={i}>
+                                        <li key={i}>
                                             <ProjTech>{a}</ProjTech>
-                                        </ProjTechLi>
+                                        </li>
                                     );
                                 })}
                             </ProjTechContainer>

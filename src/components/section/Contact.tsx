@@ -23,16 +23,16 @@ const animation = keyframes`
     }
 `;
 
-const Title = styled.h1<{ view: boolean }>`
+const Title = styled.h1<{ $view: boolean }>`
     padding: 80px 0 120px;
     width: 100%;
     font-size: 64px;
     font-family: ${(props) => props.theme.titleFont};
     font-weight: 600;
     color: #c8b6ff;
-    opacity: ${(props) => (props.view ? 1 : 0)};
+    opacity: ${(props) => (props.$view ? 1 : 0)};
     animation: ${(props) =>
-        props.view &&
+        props.$view &&
         css`
             ${animation} 1s ease-in-out
         `};
@@ -70,7 +70,7 @@ const introAnimation = keyframes`
     }
 `;
 
-const IconContainer = styled.div<{ view: boolean }>`
+const IconContainer = styled.div<{ $view: boolean }>`
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -79,9 +79,9 @@ const IconContainer = styled.div<{ view: boolean }>`
     font-size: 20px;
     font-family: ${(props) => props.theme.contentFont};
     color: #fff;
-    opacity: ${(props) => (props.view ? 1 : 0)};
+    opacity: ${(props) => (props.$view ? 1 : 0)};
     animation: ${(props) =>
-        props.view &&
+        props.$view &&
         css`
             ${introAnimation} 1s ease-in-out
         `};
@@ -137,10 +137,10 @@ const Contact = forwardRef((_, ref) => {
                 }
             }}
         >
-            <Title ref={animationRef} view={isInView}>
+            <Title ref={animationRef} $view={isInView}>
                 CONTACT
             </Title>
-            <IconContainer ref={animationRef} view={isInView}>
+            <IconContainer ref={animationRef} $view={isInView}>
                 <p>
                     <EmailIcon />
                     sohee407@gmail.com

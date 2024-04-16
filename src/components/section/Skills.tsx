@@ -22,15 +22,15 @@ const animation = keyframes`
     }
 `;
 
-const Title = styled.h1<{ view: boolean }>`
+const Title = styled.h1<{ $view: boolean }>`
     padding: 80px 0;
     font-size: 64px;
     font-family: ${(props) => props.theme.titleFont};
     font-weight: 600;
     color: #c8b6ff;
-    opacity: ${(props) => (props.view ? 1 : 0)};
+    opacity: ${(props) => (props.$view ? 1 : 0)};
     animation: ${(props) =>
-        props.view &&
+        props.$view &&
         css`
             ${animation} 1s ease-in-out
         `};
@@ -68,14 +68,14 @@ const contentAnimation = keyframes`
     }
 `;
 
-const Content = styled.div<{ view: boolean }>`
+const Content = styled.div<{ $view: boolean }>`
     display: grid;
     gap: 60px;
     grid-template-columns: repeat(2, 1fr);
 
-    opacity: ${(props) => (props.view ? 1 : 0)};
+    opacity: ${(props) => (props.$view ? 1 : 0)};
     animation: ${(props) =>
-        props.view &&
+        props.$view &&
         css`
             ${contentAnimation} 1s ease-in-out
         `};
@@ -100,8 +100,6 @@ const SkillName1 = styled.p`
     border-bottom: 1px solid #fff;
 `;
 
-const SkillContainer = styled.div``;
-
 const SkillContainerFlat = styled.div`
     display: flex;
     gap: 20px;
@@ -114,8 +112,6 @@ const SkillContent = styled.div`
     align-items: center;
     margin-top: 20px;
 `;
-
-const SkillContentFlat = styled.div``;
 
 const ImgWrapper = styled.div`
     width: 50px;
@@ -175,14 +171,14 @@ const Skills = forwardRef((_, ref) => {
                 }
             }}
         >
-            <Title ref={animationRef} view={isInView}>
+            <Title ref={animationRef} $view={isInView}>
                 SKILLS
             </Title>
             {isLoading && (
-                <Content ref={animationRef} view={isInView}>
+                <Content ref={animationRef} $view={isInView}>
                     <SkillBox>
                         <SkillName1>Front-End</SkillName1>
-                        <SkillContainer>
+                        <div>
                             {frontendItems.map((a) => (
                                 <SkillContent key={a._id}>
                                     <ImgWrapper>
@@ -197,11 +193,11 @@ const Skills = forwardRef((_, ref) => {
                                     <SkillDesc>{a.content}</SkillDesc>
                                 </SkillContent>
                             ))}
-                        </SkillContainer>
+                        </div>
                     </SkillBox>
                     <SkillBox>
                         <SkillName1>Framework</SkillName1>
-                        <SkillContainer>
+                        <div>
                             {frameworkItems.map((a, i) => (
                                 <SkillContent key={i}>
                                     <ImgWrapper>
@@ -216,11 +212,11 @@ const Skills = forwardRef((_, ref) => {
                                     <SkillDesc>{a.content}</SkillDesc>
                                 </SkillContent>
                             ))}
-                        </SkillContainer>
+                        </div>
                     </SkillBox>
                     <SkillBox>
                         <SkillName1>Library</SkillName1>
-                        <SkillContainer>
+                        <div>
                             {libraryItems.map((a, i) => (
                                 <SkillContent key={i}>
                                     <ImgWrapper>
@@ -235,13 +231,13 @@ const Skills = forwardRef((_, ref) => {
                                     <SkillDesc>{a.content}</SkillDesc>
                                 </SkillContent>
                             ))}
-                        </SkillContainer>
+                        </div>
                     </SkillBox>
                     <SkillBox>
                         <SkillName1>Tools</SkillName1>
                         <SkillContainerFlat>
                             {toolsItems.map((a, i) => (
-                                <SkillContentFlat key={i}>
+                                <div key={i}>
                                     <ImgWrapper>
                                         <Img
                                             src={require(
@@ -251,7 +247,7 @@ const Skills = forwardRef((_, ref) => {
                                             )}
                                         />
                                     </ImgWrapper>
-                                </SkillContentFlat>
+                                </div>
                             ))}
                         </SkillContainerFlat>
                     </SkillBox>

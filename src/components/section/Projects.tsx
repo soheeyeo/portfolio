@@ -26,15 +26,15 @@ const animation = keyframes`
     }
 `;
 
-const Title = styled.h1<{ view: boolean }>`
+const Title = styled.h1<{ $view: boolean }>`
     padding: 80px 0;
     font-size: 64px;
     font-family: ${(props) => props.theme.titleFont};
     font-weight: 600;
     color: #c8b6ff;
-    opacity: ${(props) => (props.view ? 1 : 0)};
+    opacity: ${(props) => (props.$view ? 1 : 0)};
     animation: ${(props) =>
-        props.view &&
+        props.$view &&
         css`
             ${animation} 1s ease-in-out
         `};
@@ -90,7 +90,7 @@ const Projects = forwardRef((_, ref) => {
                 }
             }}
         >
-            <Title ref={animationRef} view={isInView}>
+            <Title ref={animationRef} $view={isInView}>
                 PROJECTS
             </Title>
             {isLoading && (

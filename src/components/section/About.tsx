@@ -26,15 +26,15 @@ const animation = keyframes`
     }
 `;
 
-const NameBox = styled.div<{ view: boolean }>`
+const NameBox = styled.div<{ $view: boolean }>`
     padding: 80px 0 120px;
     width: 100%;
     font-family: ${(props) => props.theme.titleFont};
     font-weight: 600;
     color: #c8b6ff;
-    opacity: ${(props) => (props.view ? 1 : 0)};
+    opacity: ${(props) => (props.$view ? 1 : 0)};
     animation: ${(props) =>
-        props.view &&
+        props.$view &&
         css`
             ${animation} 1s ease-in-out
         `};
@@ -142,11 +142,11 @@ const introAnimation = keyframes`
     }
 `;
 
-const IntroContainer = styled.div<{ view: boolean }>`
+const IntroContainer = styled.div<{ $view: boolean }>`
     width: 70%;
-    opacity: ${(props) => (props.view ? 1 : 0)};
+    opacity: ${(props) => (props.$view ? 1 : 0)};
     animation: ${(props) =>
-        props.view &&
+        props.$view &&
         css`
             ${introAnimation} 1s ease-in-out
         `};
@@ -206,7 +206,7 @@ const About = forwardRef((_, ref) => {
             }}
         >
             <h1 className="a11yhidden">ABOUT</h1>
-            <NameBox ref={animationRef} view={isInView}>
+            <NameBox ref={animationRef} $view={isInView}>
                 <Name>SOHEE YEO</Name>
             </NameBox>
             {isLoading ? (
@@ -214,7 +214,7 @@ const About = forwardRef((_, ref) => {
                     <IntroBtn>
                         <IntroTxt>Intro</IntroTxt>
                     </IntroBtn>
-                    <IntroContainer ref={animationRef} view={isInView}>
+                    <IntroContainer ref={animationRef} $view={isInView}>
                         <Intro>{data[0].info}</Intro>
                     </IntroContainer>
                 </ContentsContainer>
