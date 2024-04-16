@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-const url = 'http://localhost:4000';
+const url = process.env.REACT_APP_URL;
 
 export const getAbout = async (): Promise<
     AxiosResponse<ApiAboutType> | undefined
